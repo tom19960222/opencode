@@ -1,3 +1,4 @@
+import { requireLocalURL } from "./air-gap"
 import { authTokenFromCredentials } from "@/utils/server"
 
 export function terminalWebSocketURL(input: {
@@ -12,6 +13,7 @@ export function terminalWebSocketURL(input: {
   password?: string
   authToken?: boolean
 }) {
+  requireLocalURL(input.url)
   const isV1 = input.protocol === "v1"
   const next = new URL(`${input.url}${isV1 ? `/pty/${input.id}/connect` : `/api/pty/${input.id}/connect`}`)
   if (isV1) {

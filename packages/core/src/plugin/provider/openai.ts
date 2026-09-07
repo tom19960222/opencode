@@ -9,6 +9,7 @@ import { Integration } from "../../integration"
 import { ModelV2 } from "../../model"
 import { OauthCallbackPage } from "../../oauth/page"
 import { ProviderV2 } from "../../provider"
+import { localFetch } from "../../air-gap-network"
 import type { PluginInternal } from "../internal"
 
 const clientID = "app_EMoamEEZ73f0CkXaXp7hrann"
@@ -119,7 +120,7 @@ const headless = {
           while (true) {
             const response = yield* Effect.tryPromise({
               try: (signal) =>
-                fetch(`${issuer}/api/accounts/deviceauth/token`, {
+                localFetch(`${issuer}/api/accounts/deviceauth/token`, {
                   method: "POST",
                   headers: headers("application/json"),
                   body: JSON.stringify({ device_auth_id: device.device_auth_id, user_code: device.user_code }),
@@ -226,7 +227,7 @@ function refresh(methodID: Integration.MethodID, value: Pick<Credential.OAuth, "
 function request<A>(url: string, init: RequestInit) {
   return Effect.tryPromise({
     try: async (signal) => {
-      const response = await fetch(url, { ...init, signal })
+      const response = await localFetch(url, { ...init, signal })
       if (!response.ok) throw new Error(`Request failed: ${response.status}`)
       return response.json() as Promise<A>
     },

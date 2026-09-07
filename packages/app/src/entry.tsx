@@ -10,6 +10,7 @@ import { dict as en } from "@/i18n/en"
 import { dict as zh } from "@/i18n/zh"
 import { authFromToken } from "@/utils/server"
 import pkg from "../package.json"
+import { airGapped } from "@/utils/air-gap"
 import { ServerConnection } from "./context/server"
 
 const DEFAULT_SERVER_URL_KEY = "opencode.settings.dat:defaultServerUrl"
@@ -70,7 +71,7 @@ const notify: Platform["notify"] = async (title, description, onClick) => {
 
   const notification = new Notification(title, {
     body: description ?? "",
-    icon: "https://opencode.ai/favicon-96x96-v3.png",
+    icon: airGapped() ? "/favicon-96x96-v3.png" : "https://opencode.ai/favicon-96x96-v3.png",
   })
 
   notification.onclick = () => {
@@ -130,7 +131,7 @@ const platform: Platform = {
   setDefaultServer: writeDefaultServerUrl,
 }
 
-if (import.meta.env.VITE_SENTRY_DSN) {
+if (!airGapped() && import.meta.env.VITE_SENTRY_DSN) {
   Sentry.init({
     dsn: import.meta.env.VITE_SENTRY_DSN,
     environment: import.meta.env.VITE_SENTRY_ENVIRONMENT ?? import.meta.env.MODE,

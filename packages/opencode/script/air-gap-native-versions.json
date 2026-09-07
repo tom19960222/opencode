@@ -1,0 +1,104 @@
+{
+  "deno": {
+    "name": "deno",
+    "version": "v2.9.6",
+    "source": "https://github.com/denoland/deno/releases/download/v2.9.6/deno-x86_64-unknown-linux-gnu.zip",
+    "sha256": "394f07f4da2bebe6ce6f1e7ce0fa16429b29b08c35e3fac3fe25972676dff4b2",
+    "repository": "https://github.com/denoland/deno",
+    "license": "MIT",
+    "licenseSource": "https://github.com/denoland/deno/blob/v2.9.6/LICENSE.md"
+  },
+  "zls": {
+    "name": "zls",
+    "version": "0.16.0",
+    "source": "https://github.com/zigtools/zls/releases/download/0.16.0/zls-x86_64-linux.tar.xz",
+    "sha256": "ded6d562a0b86ee878b1ddf70ffab2797ce3cdca3b02d6077548f9d56dff96b6",
+    "repository": "https://github.com/zigtools/zls",
+    "license": "MIT",
+    "licenseSource": "https://github.com/zigtools/zls/blob/0.16.0/LICENSE"
+  },
+  "rust-analyzer": {
+    "name": "rust-analyzer",
+    "version": "2026-08-31",
+    "source": "https://github.com/rust-lang/rust-analyzer/releases/download/2026-08-31/rust-analyzer-x86_64-unknown-linux-gnu.gz",
+    "sha256": "a775f9edb543bb0c077da339b783e89446092986cde921c9d8e1733b091080c6",
+    "repository": "https://github.com/rust-lang/rust-analyzer",
+    "license": "NOASSERTION",
+    "licenseSource": "https://github.com/rust-lang/rust-analyzer/blob/2026-08-31/LICENSE-APACHE"
+  },
+  "clangd": {
+    "name": "clangd",
+    "version": "22.1.6",
+    "source": "https://github.com/clangd/clangd/releases/download/22.1.6/clangd-linux-22.1.6.zip",
+    "sha256": "a9c77443af2e447ed467e84771848d3a6ac1c56f84bcfcde717e66318de77cfa",
+    "repository": "https://github.com/clangd/clangd",
+    "license": "Apache-2.0",
+    "licenseSource": "https://github.com/clangd/clangd/blob/22.1.6/LICENSE"
+  },
+  "shfmt": {
+    "name": "shfmt",
+    "version": "v3.14.1",
+    "source": "https://github.com/mvdan/sh/releases/download/v3.14.1/shfmt_v3.14.1_linux_amd64",
+    "sha256": "76e77641faa025814b77f153b29796b8e6fa2fca03e0c76a691608b86c7ea7bf",
+    "repository": "https://github.com/mvdan/sh",
+    "license": "BSD-3-Clause",
+    "licenseSource": "https://github.com/mvdan/sh/blob/v3.14.1/LICENSE"
+  },
+  "lua-language-server": {
+    "name": "lua-language-server",
+    "version": "3.19.1",
+    "source": "https://github.com/LuaLS/lua-language-server/releases/download/3.19.1/lua-language-server-3.19.1-linux-x64.tar.gz",
+    "sha256": "e9235d2d72ef55bc41cf8c99cda2ed64777682024b4bb81f5dea425060c5cbb8",
+    "repository": "https://github.com/LuaLS/lua-language-server",
+    "license": "MIT",
+    "licenseSource": "https://github.com/LuaLS/lua-language-server/blob/3.19.1/LICENSE"
+  },
+  "texlab": {
+    "name": "texlab",
+    "version": "v5.26.0",
+    "source": "https://github.com/latex-lsp/texlab/releases/download/v5.26.0/texlab-x86_64-linux.tar.gz",
+    "sha256": "8697bd5e479d4584b14b7eed5c320c80ec4e1d91ebefbb6801e6bf38e9971300",
+    "repository": "https://github.com/latex-lsp/texlab",
+    "license": "GPL-3.0",
+    "licenseSource": "https://github.com/latex-lsp/texlab/blob/v5.26.0/LICENSE"
+  },
+  "tinymist": {
+    "name": "tinymist",
+    "version": "v0.15.6",
+    "source": "https://github.com/Myriad-Dreamin/tinymist/releases/download/v0.15.6/tinymist-x86_64-unknown-linux-gnu.tar.gz",
+    "sha256": "b2875e6cf680ef4ccfab3d04b7284b0f374bcdb0a1b5fdc43defa95c82401da1",
+    "repository": "https://github.com/Myriad-Dreamin/tinymist",
+    "license": "Apache-2.0",
+    "licenseSource": "https://github.com/Myriad-Dreamin/tinymist/blob/v0.15.6/LICENSE"
+  },
+  "go": {
+    "name": "go",
+    "version": "go1.27.1",
+    "source": "https://go.dev/dl/go1.27.1.linux-amd64.tar.gz",
+    "sha256": "63d339f0da5ab53635a56f2490a7984dfe12dfcff22ad749f63edaf590168445"
+  },
+  "zig": {
+    "name": "zig",
+    "version": "0.16.0",
+    "source": "https://ziglang.org/download/0.16.0/zig-x86_64-linux-0.16.0.tar.xz",
+    "sha256": "70e49664a74374b48b51e6f3fdfbf437f6395d42509050588bd49abe52ba3d00"
+  },
+  "terraform": {
+    "name": "terraform",
+    "version": "1.16.1",
+    "source": "https://releases.hashicorp.com/terraform/1.16.1/terraform_1.16.1_linux_amd64.zip",
+    "sha256": "745d33b4b02b7980c62a38ec1beea24ee084ea8caf3f503c200554bd9a0cbe49"
+  },
+  "terraform-ls": {
+    "name": "terraform-ls",
+    "version": "0.39.0",
+    "source": "https://releases.hashicorp.com/terraform-ls/0.39.0/terraform-ls_0.39.0_linux_amd64.zip",
+    "sha256": "7750edc736845fd8c04ff0fc6332423c12d8275b358668c8c17e8aedc43ef971"
+  },
+  "gopls": {
+    "name": "gopls",
+    "version": "v0.23.0",
+    "source": "golang.org/x/tools/gopls@v0.23.0",
+    "sha256": "4adb9d26e8e51db7446bb6eb0604b15ce9dd42a6b597b665453e83102a76c0d1"
+  }
+}

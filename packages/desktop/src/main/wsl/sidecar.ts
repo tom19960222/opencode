@@ -6,6 +6,7 @@ import { checkHealth } from "../server"
 import { type WslCommandLine, resolveWslOpencode, shellEscape, wslArgs } from "./runtime"
 import { pollWslHealth } from "./startup"
 import { nativeT } from "../native-translations"
+import { airGapped } from "../air-gap"
 
 export type WslSidecar = {
   listener: { stop: () => void; onExit: (cb: (code: number | null, signal: NodeJS.Signals | null) => void) => void }
@@ -24,12 +25,21 @@ export async function spawnWslSidecar(
   const port = await allocatePort()
   const password = randomUUID()
   const username = "opencode"
+  const airGapEnvironment = airGapped()
+    ? [
+        "export OPENCODE_AIR_GAPPED=1",
+        ...(process.env.OPENCODE_AIR_GAP_ALLOW_ORIGINS
+          ? [`export OPENCODE_AIR_GAP_ALLOW_ORIGINS=${shellEscape(process.env.OPENCODE_AIR_GAP_ALLOW_ORIGINS)}`]
+          : []),
+      ]
+    : []
   const script = [
     "set -euo pipefail",
     'cd "$HOME" || cd /',
     'PATH=$(awk -v RS=: -v ORS=: \'$0 !~ /^\\/mnt\\//\' <<<"$PATH" | sed "s/:$//")',
     "export PATH",
     "export WSLENV=",
+    ...airGapEnvironment,
     "export OPENCODE_EXPERIMENTAL_DISABLE_FILEWATCHER=true",
     "export OPENCODE_CLIENT=desktop",
     `export OPENCODE_SERVER_USERNAME=${shellEscape(username)}`,

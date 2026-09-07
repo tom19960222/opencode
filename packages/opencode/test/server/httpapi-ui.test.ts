@@ -356,6 +356,33 @@ describe("HttpApi UI fallback", () => {
     }),
   )
 
+  it.live("serves the air-gap marker and same-origin policy from local HTML", () =>
+    Effect.gen(function* () {
+      const previous = process.env.OPENCODE_AIR_GAPPED
+      yield* Effect.addFinalizer(() => Effect.sync(() => restoreEnv("OPENCODE_AIR_GAPPED", previous)))
+      const origins = process.env.OPENCODE_AIR_GAP_ALLOW_ORIGINS
+      yield* Effect.addFinalizer(() => Effect.sync(() => restoreEnv("OPENCODE_AIR_GAP_ALLOW_ORIGINS", origins)))
+      process.env.OPENCODE_AIR_GAPPED = "on"
+      delete process.env.OPENCODE_AIR_GAP_ALLOW_ORIGINS
+      const fs = yield* FSUtil.Service
+      const directory = yield* fs.makeTempDirectoryScoped({ prefix: "opencode-offline-ui-" })
+      const file = `${directory}/index.html`
+      yield* fs.writeWithDirs(file, "<html><head></head><body>local UI</body></html>")
+      const response = HttpServerResponse.toWeb(yield* serveEmbeddedUIEffect("/", fs, { "index.html": file }))
+      expect(yield* Effect.promise(() => response.text())).toContain('<meta name="opencode-air-gapped" content="on">')
+      expect(response.headers.get("content-security-policy")).toContain("connect-src 'self' data: blob:")
+      expect(response.headers.get("content-security-policy")).not.toContain("https:")
+      process.env.OPENCODE_AIR_GAP_ALLOW_ORIGINS = "https://models.internal:8000"
+      const allowed = HttpServerResponse.toWeb(yield* serveEmbeddedUIEffect("/", fs, { "index.html": file }))
+      expect(yield* Effect.promise(() => allowed.text())).toContain(
+        '<meta name="opencode-air-gap-allow-origins" content="https://models.internal:8000">',
+      )
+      expect(allowed.headers.get("content-security-policy")).toContain(
+        "connect-src 'self' https://models.internal:8000 wss://models.internal:8000 data: blob:",
+      )
+    }),
+  )
+
   it.live("keeps matched API routes ahead of the UI fallback", () =>
     Effect.gen(function* () {
       const server = routeOrderingApp()

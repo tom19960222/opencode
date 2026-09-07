@@ -1,3 +1,5 @@
+import { AirGap } from "../air-gap"
+import { Flag } from "../flag/flag"
 export * as SkillDiscovery from "./discovery"
 
 import path from "path"
@@ -84,6 +86,11 @@ const layer = Layer.effect(
 
     const download = Effect.fn("SkillDiscovery.download")(function* (url: string, destination: string) {
       if (yield* fs.exists(destination).pipe(Effect.orDie)) return true
+      if (Flag.OPENCODE_AIR_GAPPED) {
+        const bytes = yield* Effect.promise(() => AirGap.read(url))
+        yield* fs.writeWithDirs(destination, bytes).pipe(Effect.orDie)
+        return true
+      }
       return yield* HttpClientRequest.get(url).pipe(
         http.execute,
         Effect.flatMap((response) => response.arrayBuffer),
@@ -100,14 +107,19 @@ const layer = Layer.effect(
         const base = url.endsWith("/") ? url : `${url}/`
         const source = new URL(base)
         const index = new URL("index.json", source).href
-        const data = yield* HttpClientRequest.get(index).pipe(
-          HttpClientRequest.acceptJson,
-          http.execute,
-          Effect.flatMap(HttpClientResponse.schemaBodyJson(Index)),
-          Effect.catch((error) =>
-            Effect.logError("failed to fetch skill index", { url: index, error }).pipe(Effect.as(undefined)),
-          ),
-        )
+        const data = Flag.OPENCODE_AIR_GAPPED
+          ? yield* Effect.promise(() => AirGap.read(index)).pipe(
+              Effect.flatMap((bytes) => Schema.decodeEffect(Schema.fromJsonString(Index))(bytes.toString("utf8"))),
+              Effect.orDie,
+            )
+          : yield* HttpClientRequest.get(index).pipe(
+              HttpClientRequest.acceptJson,
+              http.execute,
+              Effect.flatMap(HttpClientResponse.schemaBodyJson(Index)),
+              Effect.catch((error) =>
+                Effect.logError("failed to fetch skill index", { url: index, error }).pipe(Effect.as(undefined)),
+              ),
+            )
         if (!data) return []
 
         const sourceRoot = path.resolve(global.cache, "skills", Bun.hash(base).toString(16))

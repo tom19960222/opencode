@@ -24,6 +24,7 @@ import {
 import * as NodeChildProcess from "node:child_process"
 import { PassThrough } from "node:stream"
 import launch from "cross-spawn"
+import { AirGap } from "./air-gap"
 import { makeGlobalNode } from "./effect/app-node"
 import { filesystem, path } from "./effect/app-node-platform"
 
@@ -107,7 +108,7 @@ export const make = Effect.gen(function* () {
   })
 
   const env = (opts: ChildProcess.CommandOptions) =>
-    opts.extendEnv ? { ...globalThis.process.env, ...opts.env } : opts.env
+    AirGap.environment(opts.extendEnv ? { ...globalThis.process.env, ...opts.env } : opts.env)
 
   const input = (x: ChildProcess.CommandInput | undefined): NodeChildProcess.IOType | undefined =>
     Stream.isStream(x) ? "pipe" : x

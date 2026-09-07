@@ -1,3 +1,4 @@
+import { airGapFetch } from "./air-gap"
 import { createOpencodeClient } from "@opencode-ai/sdk/v2/client"
 import { OpenCode, type OpenCodeClient } from "@opencode-ai/client/promise"
 import type { ServerConnection } from "@/context/server"
@@ -33,6 +34,7 @@ export function createSdkForServer({
 
   return createOpencodeClient({
     ...config,
+    fetch: airGapFetch(config.fetch),
     headers: {
       ...(config.headers instanceof Headers ? Object.fromEntries(config.headers.entries()) : config.headers),
       ...auth,
@@ -47,7 +49,7 @@ export function createApiForServer(input: {
 }): OpenCodeClient {
   return OpenCode.make({
     baseUrl: input.server.url,
-    fetch: input.fetch,
+    fetch: airGapFetch(input.fetch),
     headers: input.server.password
       ? {
           Authorization: `Basic ${authTokenFromCredentials({

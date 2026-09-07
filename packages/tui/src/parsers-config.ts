@@ -1,4 +1,7 @@
-export default {
+import { createHash } from "node:crypto"
+import path from "node:path"
+
+export const config = {
   // NOTE: FOR markdown, javascript and typescript, we use the opentui built-in parsers
   // Warn: when taking queries from the nvim-treesitter repo, make sure to include the query dependencies as well
   //       marked with for example `; inherits: ecma` at the top of the file. Just put the dependencies before the actual query.
@@ -266,7 +269,7 @@ export default {
         highlights: [
           // NOTE: Using parser repo queries instead of nvim-treesitter due to incompatible #lua-match? predicates
           // "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/highlights.scm
-          "https://raw.githubusercontent.com/alex-pinkus/tree-sitter-swift/main/queries/highlights.scm",
+          "https://raw.githubusercontent.com/alex-pinkus/tree-sitter-swift/0.7.1/queries/highlights.scm",
         ],
         locals: [
           "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/swift/locals.scm",
@@ -383,4 +386,25 @@ export default {
       },
     },
   ],
+}
+
+// Keep every parser source local in air-gapped mode, even on a fresh cache.
+export function parserSource(source: string) {
+  if (!["1", "true", "on"].includes(process.env.OPENCODE_AIR_GAPPED?.toLowerCase() ?? "")) return source
+  if (!/^https?:\/\//.test(source)) return source
+  return path.join(
+    process.env.OPENCODE_AIR_GAP_DIR ?? path.resolve(path.dirname(process.execPath), "../assets"),
+    "parsers",
+    createHash("sha256").update(source).digest("hex") + path.extname(new URL(source).pathname),
+  )
+}
+
+export default {
+  parsers: config.parsers.map((parser) => ({
+    ...parser,
+    wasm: parserSource(parser.wasm),
+    queries: Object.fromEntries(
+      Object.entries(parser.queries).map(([kind, sources]) => [kind, sources.map(parserSource)]),
+    ) as typeof parser.queries,
+  })),
 }

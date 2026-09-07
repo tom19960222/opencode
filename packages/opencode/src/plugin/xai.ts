@@ -1,6 +1,7 @@
 import type { Hooks, PluginInput } from "@opencode-ai/plugin"
 import { OAUTH_DUMMY_KEY } from "../auth"
 import { InstallationVersion } from "@opencode-ai/core/installation/version"
+import { localFetch } from "@opencode-ai/core/air-gap-network"
 
 // Public Grok-CLI OAuth client.
 const CLIENT_ID = "b1a00492-073a-47ea-816f-4c329264a828"
@@ -75,7 +76,7 @@ export function accessTokenIsExpiring(
 }
 
 async function refreshAccessToken(refreshToken: string, options: XaiAuthPluginOptions = {}): Promise<TokenResponse> {
-  const response = await fetch(options.tokenUrl ?? TOKEN_URL, {
+  const response = await localFetch(options.tokenUrl ?? TOKEN_URL, {
     method: "POST",
     headers: authHeaders(),
     body: new URLSearchParams({
@@ -106,7 +107,7 @@ interface DeviceTokenErrorBody {
 }
 
 export async function requestDeviceCode(options: XaiAuthPluginOptions = {}): Promise<DeviceCodeResponse> {
-  const response = await fetch(options.deviceAuthorizationUrl ?? DEVICE_AUTHORIZATION_URL, {
+  const response = await localFetch(options.deviceAuthorizationUrl ?? DEVICE_AUTHORIZATION_URL, {
     method: "POST",
     headers: authHeaders(),
     body: new URLSearchParams({
@@ -159,7 +160,7 @@ export async function pollDeviceCodeToken(
   )
 
   while (now() < deadline) {
-    const response = await fetch(options.tokenUrl ?? TOKEN_URL, {
+    const response = await localFetch(options.tokenUrl ?? TOKEN_URL, {
       method: "POST",
       headers: authHeaders(),
       body: new URLSearchParams({
@@ -227,7 +228,7 @@ export async function XaiAuthPlugin(input: PluginInput, options: XaiAuthPluginOp
             // /connect with a pasted key). When that happens, pass the
             // request through untouched so the AI SDK's own apiKey-based
             // Authorization header reaches xAI unmodified.
-            if (currentAuth.type !== "oauth") return fetch(requestInput, init)
+            if (currentAuth.type !== "oauth") return localFetch(requestInput, init)
 
             // Refresh either when the stored expires timestamp is within the
             // skew window, or — for JWT access tokens — when the JWT exp
@@ -290,7 +291,7 @@ export async function XaiAuthPlugin(input: PluginInput, options: XaiAuthPluginOp
             headers.set("authorization", `Bearer ${currentAuth.access}`)
             headers.set("User-Agent", `opencode/${InstallationVersion}`)
 
-            return fetch(requestInput, { ...init, headers })
+            return localFetch(requestInput, { ...init, headers })
           },
         }
       },

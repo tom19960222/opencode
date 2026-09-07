@@ -1,0 +1,655 @@
+# Source locations for network review
+# Lexical evidence only: includes comments, schema identifiers, links and local calls.
+# Use air-gap-network-inventory.md for classification; this list does not prove runtime egress is prevented.
+
+packages/app/src/components/dialog-connect-provider.tsx:852: href="https://opencode.ai/zen"
+packages/app/src/components/dialog-connect-provider.tsx:901: <ExternalLink href="https://opencode.ai/zen" tabIndex={-1}>
+packages/app/src/components/dialog-custom-provider.tsx:188: <ExternalLink href="https://opencode.ai/docs/providers/#custom-provider" tabIndex={-1}>
+packages/app/src/components/dialog-select-server.tsx:104: if (username) http.username = username
+packages/app/src/components/dialog-select-server.tsx:105: if (password) http.password = password
+packages/app/src/components/dialog-select-server.tsx:260: if (store.addServer.password) conn.http.password = store.addServer.password
+packages/app/src/components/dialog-select-server.tsx:261: if (store.addServer.password && store.addServer.username) conn.http.username = store.addServer.username
+packages/app/src/components/dialog-select-server.tsx:299: normalized === input.original.http.url &&
+packages/app/src/components/dialog-select-server.tsx:301: username === input.original.http.username &&
+packages/app/src/components/dialog-select-server.tsx:302: password === input.original.http.password
+packages/app/src/components/dialog-select-server.tsx:325: if (normalized === input.original.http.url) {
+packages/app/src/components/dialog-select-server.tsx:462: return items().find((x) => x.type === "http" && x.http.url === store.editServer.id)
+packages/app/src/components/dialog-select-server.tsx:486: id: conn.http.url,
+packages/app/src/components/dialog-select-server.tsx:487: value: conn.http.url,
+packages/app/src/components/dialog-select-server.tsx:489: username: conn.http.username ?? "",
+packages/app/src/components/dialog-select-server.tsx:490: password: conn.http.password ?? "",
+packages/app/src/components/dialog-select-server.tsx:588: key={(x) => x.http.url}
+packages/app/src/components/help-button.tsx:43: xmlns="http://www.w3.org/2000/svg"
+packages/app/src/components/server/server-row.tsx:43: props.conn.http.url
+packages/app/src/components/server/server-row.tsx:99: {conn().http.username ? (
+packages/app/src/components/server/server-row.tsx:100: <span class="text-text-weak">{conn().http.username}</span>
+packages/app/src/components/server/server-row.tsx:105: {conn().http.password && <span class="text-text-weak">••••••••</span>}
+packages/app/src/components/settings-general.tsx:485: <ExternalLink href="https://opencode.ai/docs/themes/">{language.t("common.learnMore")}</ExternalLink>
+packages/app/src/components/settings-v2/general.tsx:153: <ExternalLink class="settings-v2-link" href="https://opencode.ai/docs/themes/">
+packages/app/src/components/settings-v2/servers.tsx:36: keys: [(item) => serverName(item), (item) => item.http.url],
+packages/app/src/components/settings-v2/servers.tsx:116: when={item.type === "http" && item.http.username}
+packages/app/src/components/settings-v2/servers.tsx:119: {item.http.username}
+packages/app/src/components/terminal.tsx:620: const socket = new WebSocket(
+packages/app/src/components/ui/drawer.tsx:2: * Taken from https://www.solid-ui.com/docs/components/drawer
+packages/app/src/context/global.tsx:141: (conn?.type === "sidecar" && conn.variant === "base") || (conn?.type === "http" && isLocalHost(conn.http.url))
+packages/app/src/context/highlights.tsx:12: const CHANGELOG_URL = "https://opencode.ai/changelog.json"
+packages/app/src/context/server-sdk.tsx:194: const url = new URL(server.http.url)
+packages/app/src/context/server-sdk.tsx:297: url: server.http.url,
+packages/app/src/context/server-sdk.tsx:356: url: server.http.url,
+packages/app/src/context/server.tsx:26: const withProtocol = /^https?:\/\//.test(trimmed) ? trimmed : `http://${trimmed}`
+packages/app/src/context/server.tsx:33: return conn.http.url.replace(/^https?:\/\//, "").replace(/\/+$/, "")
+packages/app/src/context/server.tsx:227: return Key.make(conn.http.url)
+packages/app/src/context/server.tsx:242: !!conn && (builtin(conn) || (conn.type === "http" && isLocalHost(conn.http.url) === "local"))
+packages/app/src/context/server.tsx:276: const url = (x: StoredServer) => (typeof x === "string" ? x : "type" in x ? x.http.url : x.url)
+packages/app/src/context/server.tsx:291: const url_ = normalizeServerUrl(input.http.url)
+packages/app/src/desktop-menu.ts:282: { type: "item", labelKey: "desktop.menu.documentation", href: "https://opencode.ai/docs" },
+packages/app/src/desktop-menu.ts:283: { type: "item", labelKey: "desktop.menu.supportForum", href: "https://discord.com/invite/opencode" },
+packages/app/src/desktop-menu.ts:289: href: "https://github.com/anomalyco/opencode/issues/new?template=feature_request.yml",
+packages/app/src/desktop-menu.ts:294: href: "https://github.com/anomalyco/opencode/issues/new?template=bug_report.yml",
+packages/app/src/entry.tsx:74: icon: airGapped() ? "/favicon-96x96-v3.png" : "https://opencode.ai/favicon-96x96-v3.png",
+packages/app/src/entry.tsx:101: if (location.hostname.includes("opencode.ai")) return "http://localhost:4096"
+packages/app/src/entry.tsx:103: return `http://${import.meta.env.VITE_OPENCODE_SERVER_HOST ?? "localhost"}:${import.meta.env.VITE_OPENCODE_SERVER_PORT ?? "4096"}`
+packages/app/src/i18n/am.ts:257: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/am.ts:280: "provider.custom.error.baseURL.format": "በhttp:// ወይም https://] መጀመር አለበት",
+packages/app/src/i18n/am.ts:415: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/ar.ts:267: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/ar.ts:290: "provider.custom.error.baseURL.format": "يجب أن يبدأ بـ http:// أو https://",
+packages/app/src/i18n/ar.ts:421: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/az.ts:263: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/az.ts:287: "provider.custom.error.baseURL.format": "http:// və ya https:// ilə başlamalıdır",
+packages/app/src/i18n/az.ts:422: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/bg.ts:263: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/bg.ts:287: "provider.custom.error.baseURL.format": "Трябва да започва с http:// или https://",
+packages/app/src/i18n/bg.ts:422: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/bn.ts:261: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/bn.ts:284: "provider.custom.error.baseURL.format": "http:// অথবা https:// দিয়ে শুরু করতে হবে",
+packages/app/src/i18n/bn.ts:419: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/br.ts:269: "provider.custom.field.baseURL.placeholder": "https://api.meuprovedor.com/v1",
+packages/app/src/i18n/br.ts:292: "provider.custom.error.baseURL.format": "Deve começar com http:// ou https://",
+packages/app/src/i18n/br.ts:423: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/bs.ts:282: "provider.custom.field.baseURL.placeholder": "https://api.mojprovajder.com/v1",
+packages/app/src/i18n/bs.ts:306: "provider.custom.error.baseURL.format": "Mora početi sa http:// ili https://",
+packages/app/src/i18n/bs.ts:450: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/ca.ts:262: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/ca.ts:286: "provider.custom.error.baseURL.format": "Ha de començar per http:// o https://",
+packages/app/src/i18n/ca.ts:421: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/cs.ts:260: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/cs.ts:284: "provider.custom.error.baseURL.format": "Musí začínat http:// nebo https://",
+packages/app/src/i18n/cs.ts:419: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/da.ts:181: "provider.custom.field.baseURL.placeholder": "https://api.minudbyder.dk/v1",
+packages/app/src/i18n/da.ts:204: "provider.custom.error.baseURL.format": "Skal starte med http:// eller https://",
+packages/app/src/i18n/da.ts:347: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/de.ts:172: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/de.ts:196: "provider.custom.error.baseURL.format": "Muss mit http:// oder https:// beginnen",
+packages/app/src/i18n/de.ts:328: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/dv.ts:264: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1 އެވެ",
+packages/app/src/i18n/dv.ts:289: "provider.custom.error.baseURL.format": "ފަށަން ޖެހޭނީ http:// ނުވަތަ https:// އިންނެވެ.",
+packages/app/src/i18n/dv.ts:425: "dialog.server.add.placeholder": "http://localhost:4096 އެވެ",
+packages/app/src/i18n/dz.ts:264: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/dz.ts:288: "provider.custom.error.baseURL.format": "http:// ཡང་ན་ https:// ལས་འགོ་བཙུགས་དགོ།",
+packages/app/src/i18n/dz.ts:424: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/el.ts:261: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/el.ts:285: "provider.custom.error.baseURL.format": "Πρέπει να ξεκινά με http:// ή https://",
+packages/app/src/i18n/el.ts:421: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/en.ts:184: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/en.ts:207: "provider.custom.error.baseURL.format": "Must start with http:// or https://",
+packages/app/src/i18n/en.ts:356: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/es.ts:282: "provider.custom.field.baseURL.placeholder": "https://api.miproveedor.com/v1",
+packages/app/src/i18n/es.ts:306: "provider.custom.error.baseURL.format": "Debe comenzar con http:// o https://",
+packages/app/src/i18n/es.ts:451: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/et.ts:260: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/et.ts:283: "provider.custom.error.baseURL.format": "Peab algama http:// või https://",
+packages/app/src/i18n/et.ts:418: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/fa.ts:261: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/fa.ts:284: "provider.custom.error.baseURL.format": "باید با http:// یا https:// شروع شود",
+packages/app/src/i18n/fa.ts:419: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/fi.ts:168: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/fi.ts:191: "provider.custom.error.baseURL.format": "Alussa on oltava http:// tai https://",
+packages/app/src/i18n/fi.ts:326: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/fo.ts:260: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/fo.ts:283: "provider.custom.error.baseURL.format": "Skal byrja við http:// ella https://",
+packages/app/src/i18n/fo.ts:418: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/fr.ts:270: "provider.custom.field.baseURL.placeholder": "https://api.monfournisseur.com/v1",
+packages/app/src/i18n/fr.ts:295: "provider.custom.error.baseURL.format": "Doit commencer par http:// ou https://",
+packages/app/src/i18n/fr.ts:427: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/hi.ts:267: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/hi.ts:291: "provider.custom.error.baseURL.format": "http:// या https:// से प्रारंभ होना चाहिए",
+packages/app/src/i18n/hi.ts:426: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/hr.ts:264: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/hr.ts:288: "provider.custom.error.baseURL.format": "Mora započeti s http:// ili https://",
+packages/app/src/i18n/hr.ts:423: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/hu.ts:264: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/hu.ts:288: "provider.custom.error.baseURL.format": "http:// vagy https:// karakterekkel kell kezdődnie",
+packages/app/src/i18n/hu.ts:423: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/hy.ts:262: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/hy.ts:286: "provider.custom.error.baseURL.format": "Պետք է սկսել http:// կամ https://",
+packages/app/src/i18n/hy.ts:421: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/id.ts:282: "provider.custom.field.baseURL.placeholder": "https://api.penyediaku.com/v1",
+packages/app/src/i18n/id.ts:305: "provider.custom.error.baseURL.format": "Harus dimulai dengan http:// atau https://",
+packages/app/src/i18n/id.ts:454: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/is.ts:264: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/is.ts:288: "provider.custom.error.baseURL.format": "Verður að byrja á http:// eða https://",
+packages/app/src/i18n/is.ts:423: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/it.ts:168: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/it.ts:192: "provider.custom.error.baseURL.format": "Deve iniziare con http:// o https://",
+packages/app/src/i18n/it.ts:328: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/ja.ts:266: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/ja.ts:289: "provider.custom.error.baseURL.format": "http:// または https:// で始まる必要があります",
+packages/app/src/i18n/ja.ts:420: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/ka.ts:260: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/ka.ts:284: "provider.custom.error.baseURL.format": "უნდა დაიწყოს http:// ან https://",
+packages/app/src/i18n/ka.ts:419: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/km.ts:260: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/km.ts:283: "provider.custom.error.baseURL.format": "ត្រូវតែចាប់ផ្តើមជាមួយ http:// ឬ https://",
+packages/app/src/i18n/km.ts:418: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/ko.ts:163: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/ko.ts:186: "provider.custom.error.baseURL.format": "http:// 또는 https://로 시작해야 합니다",
+packages/app/src/i18n/ko.ts:309: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/lo.ts:260: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/lo.ts:283: "provider.custom.error.baseURL.format": "ຕ້ອງເລີ່ມຕົ້ນດ້ວຍ http:// ຫຼື https://",
+packages/app/src/i18n/lo.ts:418: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/lt.ts:264: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/lt.ts:289: "provider.custom.error.baseURL.format": "Turi prasidėti http:// arba https://",
+packages/app/src/i18n/lt.ts:424: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/lv.ts:260: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/lv.ts:284: "provider.custom.error.baseURL.format": "Jāsākas ar http:// vai https://",
+packages/app/src/i18n/lv.ts:419: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/mk.ts:261: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/mk.ts:285: "provider.custom.error.baseURL.format": "Мора да започне со http:// или https://",
+packages/app/src/i18n/mk.ts:420: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/mn.ts:263: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/mn.ts:287: "provider.custom.error.baseURL.format": "http:// эсвэл https:// гэж эхлэх ёстой",
+packages/app/src/i18n/mn.ts:422: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/ms.ts:260: "provider.custom.field.baseURL.placeholder": "https://api.penyediaSaya.com/v1",
+packages/app/src/i18n/ms.ts:284: "provider.custom.error.baseURL.format": "Mesti bermula dengan http:// atau https://",
+packages/app/src/i18n/ms.ts:419: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/my.ts:262: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/my.ts:287: "provider.custom.error.baseURL.format": "http:// သို့မဟုတ် https:// ဖြင့် စတင်ရပါမည်။",
+packages/app/src/i18n/my.ts:423: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/ne.ts:261: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/ne.ts:285: "provider.custom.error.baseURL.format": "http:// वा https:// बाट सुरु गर्नुपर्छ",
+packages/app/src/i18n/ne.ts:420: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/nl.ts:261: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/nl.ts:284: "provider.custom.error.baseURL.format": "Moet beginnen met http:// of https://",
+packages/app/src/i18n/nl.ts:420: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/no.ts:280: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/no.ts:304: "provider.custom.error.baseURL.format": "Må starte med http:// eller https://",
+packages/app/src/i18n/no.ts:440: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/pa.ts:266: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/pa.ts:289: "provider.custom.error.baseURL.format": "http:// یا https:// توں شروع کرنا ضروری اے۔",
+packages/app/src/i18n/pa.ts:426: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/pl.ts:268: "provider.custom.field.baseURL.placeholder": "https://api.mojdostawca.com/v1",
+packages/app/src/i18n/pl.ts:292: "provider.custom.error.baseURL.format": "Musi zaczynać się od http:// lub https://",
+packages/app/src/i18n/pl.ts:423: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/ro.ts:260: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/ro.ts:283: "provider.custom.error.baseURL.format": "Trebuie să înceapă cu http:// sau https://",
+packages/app/src/i18n/ro.ts:418: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/ru.ts:281: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/ru.ts:305: "provider.custom.error.baseURL.format": "Должен начинаться с http:// или https://",
+packages/app/src/i18n/ru.ts:448: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/si.ts:260: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/si.ts:283: "provider.custom.error.baseURL.format": "http:// හෝ https:// සමඟින් ආරම්භ කළ යුතුය",
+packages/app/src/i18n/si.ts:418: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/sk.ts:260: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/sk.ts:283: "provider.custom.error.baseURL.format": "Musí začínať http:// alebo https://",
+packages/app/src/i18n/sk.ts:418: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/sl.ts:260: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/sl.ts:283: "provider.custom.error.baseURL.format": "Začeti se mora s http:// ali https://",
+packages/app/src/i18n/sl.ts:418: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/sq.ts:261: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/sq.ts:284: "provider.custom.error.baseURL.format": "Duhet të fillojë me http:// ose https://",
+packages/app/src/i18n/sq.ts:420: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/sr.ts:261: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/sr.ts:284: "provider.custom.error.baseURL.format": "мора да почиње са http:// или https://",
+packages/app/src/i18n/sr.ts:419: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/sv.ts:262: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/sv.ts:285: "provider.custom.error.baseURL.format": "Måste börja med http:// eller https://",
+packages/app/src/i18n/sv.ts:420: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/tg.ts:261: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/tg.ts:285: "provider.custom.error.baseURL.format": "Бояд бо http:// ё https:// оғоз шавад",
+packages/app/src/i18n/tg.ts:421: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/th.ts:280: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/th.ts:303: "provider.custom.error.baseURL.format": "ต้องขึ้นต้นด้วย http:// หรือ https://",
+packages/app/src/i18n/th.ts:447: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/tk.ts:261: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/tk.ts:419: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/tr.ts:286: "provider.custom.field.baseURL.placeholder": "https://api.saglayicim.com/v1",
+packages/app/src/i18n/tr.ts:310: "provider.custom.error.baseURL.format": "http:// veya https:// ile başlamalı",
+packages/app/src/i18n/tr.ts:454: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/uk.ts:282: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/uk.ts:306: "provider.custom.error.baseURL.format": "Має починатися з http:// або https://",
+packages/app/src/i18n/uk.ts:455: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/ur.ts:268: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/ur.ts:292: "provider.custom.error.baseURL.format": "http:// یا https:// سے شروع ہونا چاہیے",
+packages/app/src/i18n/ur.ts:428: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/uz.ts:262: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/uz.ts:286: "provider.custom.error.baseURL.format": "http:// yoki https:// bilan boshlanishi kerak",
+packages/app/src/i18n/uz.ts:421: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/vi.ts:268: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/vi.ts:291: "provider.custom.error.baseURL.format": "Phải bắt đầu bằng http:// hoặc https://",
+packages/app/src/i18n/vi.ts:426: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/zh.ts:302: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/zh.ts:325: "provider.custom.error.baseURL.format": "必须以 http:// 或 https:// 开头",
+packages/app/src/i18n/zh.ts:467: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/i18n/zht.ts:281: "provider.custom.field.baseURL.placeholder": "https://api.myprovider.com/v1",
+packages/app/src/i18n/zht.ts:304: "provider.custom.error.baseURL.format": "必須以 http:// 或 https:// 開頭",
+packages/app/src/i18n/zht.ts:447: "dialog.server.add.placeholder": "http://localhost:4096",
+packages/app/src/pages/error.tsx:357: onClick={() => platform.openExternal("https://opencode.ai/desktop-feedback")}
+packages/app/src/pages/home/home-projects-controller.tsx:123: help: () => platform.openExternal("https://opencode.ai/desktop-feedback"),
+packages/app/src/pages/home/home-projects-view.tsx:253: <span class={HOME_PROJECT_NAV_LABEL}>{props.server.displayName ?? new URL(props.server.http.url).host}</span>
+packages/app/src/pages/layout.tsx:2241: onOpenHelp={() => platform.openExternal("https://opencode.ai/desktop-feedback")}
+packages/app/src/pages/layout/helpers.ts:91: if (id === OPENCODE_PROJECT_ID) return airGapped() ? "/favicon.svg" : "https://opencode.ai/favicon.svg"
+packages/app/src/pages/session/composer/session-todo-dock.tsx:27: xmlns="http://www.w3.org/2000/svg"
+packages/app/src/utils/draft-store.ts:47: const blob = await fetch(item.dataUrl).then((response) => response.blob())
+packages/app/src/utils/draft-store.ts:54: const data = await fetch(blob.id).then((response) => response.blob())
+packages/app/src/utils/draft-store.ts:157: const data = await fetch(blob.url).then((response) => response.blob())
+packages/app/src/wsl/dialog-add-server.tsx:210: <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+packages/app/src/wsl/dialog-add-server.tsx:224: <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+packages/app/src/wsl/dialog-add-server.tsx:418: xmlns="http://www.w3.org/2000/svg"
+packages/core/src/air-gap-network.ts:28: return fetch(input, Flag.OPENCODE_AIR_GAPPED ? { ...init, redirect: "error" } : init)
+packages/core/src/database/sqlite.bun.ts:59: // @ts-ignore bun-types missing safeIntegers method, fixed in https://github.com/oven-sh/bun/pull/26627
+packages/core/src/database/sqlite.bun.ts:75: // @ts-ignore bun-types missing safeIntegers method, fixed in https://github.com/oven-sh/bun/pull/26627
+packages/core/src/effect/app-node-platform.ts:12: service: HttpClient.HttpClient,
+packages/core/src/effect/app-node-platform.ts:13: layer: FetchHttpClient.layer.pipe(Layer.provide(Layer.succeed(FetchHttpClient.Fetch, localFetch))),
+packages/core/src/fs-util.ts:119: // https://github.com/oven-sh/bun/issues/21901
+packages/core/src/github-copilot/copilot-provider.ts:53: const baseURL = withoutTrailingSlash(options.baseURL ?? "https://api.openai.com/v1")
+packages/core/src/github-copilot/responses/openai-responses-language-model.ts:114: * @see https://platform.openai.com/docs/api-reference/responses/create#responses_create-top_logprobs
+packages/core/src/github-copilot/responses/openai-responses-language-model.ts:313: // see https://platform.openai.com/docs/guides/reasoning#limitations
+packages/core/src/github-copilot/responses/openai-responses-language-model.ts:1744: * @see https://platform.openai.com/docs/api-reference/responses/create
+packages/core/src/github-copilot/responses/openai-responses-language-model.ts:1745: * @see https://cookbook.openai.com/examples/using_logprobs
+packages/core/src/models-dev.ts:150: const http = HttpClient.filterStatusOk(
+packages/core/src/models-dev.ts:151: (yield* HttpClient.HttpClient).pipe(
+packages/core/src/models-dev.ts:152: HttpClient.retryTransient({
+packages/core/src/models-dev.ts:160: const source = Flag.OPENCODE_MODELS_URL || "https://models.opencode.ai"
+packages/core/src/models-dev.ts:163: source === "https://models.opencode.ai" ? "models.json" : `models-${Hash.fast(source)}.json`,
+packages/core/src/models-dev.ts:178: http.execute,
+packages/core/src/npm-config.ts:37: const registry = typeof config.registry === "string" ? config.registry : "https://registry.npmjs.org"
+packages/core/src/oauth/page.ts:127: fetch(TOKEN_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)}).then(function(res){
+packages/core/src/oauth/page.ts:253: const WORDMARK = `<svg class="wordmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 234 42" fill="none" aria-label="OpenCode" role="img">
+packages/core/src/observability.ts:16: Layer.provide(FetchHttpClient.layer),
+packages/core/src/plugin/internal.ts:47: | HttpClient.HttpClient
+packages/core/src/plugin/internal.ts:79: const http = yield* HttpClient.HttpClient
+packages/core/src/plugin/internal.ts:101: Effect.provideService(HttpClient.HttpClient, http),
+packages/core/src/plugin/internal.ts:130: Layer.provideMerge(FetchHttpClient.layer.pipe(Layer.provide(Layer.succeed(FetchHttpClient.Fetch, localFetch)))),
+packages/core/src/plugin/provider/azure.ts:70: provider.request.body.baseURL = `https://${resourceName}.cognitiveservices.azure.com/openai`
+packages/core/src/plugin/provider/cloudflare-workers-ai.ts:54: return `https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/v1`
+packages/core/src/plugin/provider/gitlab.ts:19: : (process.env.GITLAB_INSTANCE_URL ?? "https://gitlab.com"),
+packages/core/src/plugin/provider/google-vertex.ts:48: const auth = new GoogleAuth({ scopes: ["https://www.googleapis.com/auth/cloud-platform"] })
+packages/core/src/plugin/provider/google-vertex.ts:162: baseURL: `https://aiplatform.${location}.rep.googleapis.com/v1/projects/${project}/locations/${location}/publishers/anthropic/models`,
+packages/core/src/plugin/provider/kilo.ts:12: if (item.provider.api.url !== "https://api.kilo.ai/api/gateway") continue
+packages/core/src/plugin/provider/kilo.ts:14: provider.request.headers["HTTP-Referer"] = "https://opencode.ai/"
+packages/core/src/plugin/provider/llmgateway.ts:15: if (item.provider.api.url !== "https://api.llmgateway.io/v1") continue
+packages/core/src/plugin/provider/llmgateway.ts:18: provider.request.headers["HTTP-Referer"] = "https://opencode.ai/"
+packages/core/src/plugin/provider/nvidia.ts:12: if (item.provider.api.url !== "https://integrate.api.nvidia.com/v1") continue
+packages/core/src/plugin/provider/nvidia.ts:14: provider.request.headers["HTTP-Referer"] = "https://opencode.ai/"
+packages/core/src/plugin/provider/openai.ts:16: const issuer = "https://auth.openai.com"
+packages/core/src/plugin/provider/openai.ts:37: "https://api.openai.com/auth"?: { chatgpt_account_id?: string }
+packages/core/src/plugin/provider/openai.ts:52: const redirect = `http://localhost:${callbackPort}/auth/callback`
+packages/core/src/plugin/provider/openai.ts:54: const url = new URL(request.url ?? "/", `http://localhost:${callbackPort}`)
+packages/core/src/plugin/provider/openai.ts:287: claims["https://api.openai.com/auth"]?.chatgpt_account_id ??
+packages/core/src/plugin/provider/opencode.ts:16: const defaultServer = "https://opencode.ai/console"
+packages/core/src/plugin/provider/opencode.ts:37: function oauth(http: HttpClient.HttpClient) {
+packages/core/src/plugin/provider/opencode.ts:86: export const OpencodePlugin = define<HttpClient.HttpClient | EventV2.Service | Scope.Scope>({
+packages/core/src/plugin/provider/opencode.ts:90: const http = yield* HttpClient.HttpClient
+packages/core/src/plugin/provider/opencode.ts:199: function fetchProviders(http: HttpClient.HttpClient, value: CredentialValue) {
+packages/core/src/plugin/provider/opencode.ts:248: function poll(http: HttpClient.HttpClient, server: string, deviceCode: string, interval: Duration.Duration) {
+packages/core/src/plugin/provider/opencode.ts:273: function credential(http: HttpClient.HttpClient, server: string, token: typeof Token.Type) {
+packages/core/src/plugin/provider/opencode.ts:300: function get<S extends Schema.Top>(http: HttpClient.HttpClient, url: string, token: string, schema: S) {
+packages/core/src/plugin/provider/opencode.ts:301: return HttpClient.filterStatusOk(http)
+packages/core/src/plugin/provider/opencode.ts:307: http: HttpClient.HttpClient,
+packages/core/src/plugin/provider/opencode.ts:316: Effect.flatMap((request) => http.execute(request)),
+packages/core/src/plugin/provider/openrouter.ts:14: provider.request.headers["HTTP-Referer"] = "https://opencode.ai/"
+packages/core/src/plugin/provider/vercel.ts:13: provider.request.headers["http-referer"] = "https://opencode.ai/"
+packages/core/src/plugin/provider/zenmux.ts:12: if (item.provider.api.url !== "https://zenmux.ai/api/v1") continue
+packages/core/src/plugin/provider/zenmux.ts:14: provider.request.headers["HTTP-Referer"] ??= "https://opencode.ai/"
+packages/core/src/repository.ts:176: if (!base) return `https://github.com/${pathname}.git`
+packages/core/src/repository.ts:192: input.remote ?? (host === "github.com" ? githubRemote(repositoryPath) : `https://${host}/${repositoryPath}.git`),
+packages/core/src/ripgrep/binary.ts:37: const http = HttpClient.filterStatusOk(yield* HttpClient.HttpClient)
+packages/core/src/ripgrep/binary.ts:112: const url = `https://github.com/BurntSushi/ripgrep/releases/download/${VERSION}/${filename}`
+packages/core/src/ripgrep/binary.ts:118: http.execute,
+packages/core/src/skill/discovery.ts:78: const http = (yield* HttpClient.HttpClient).pipe(
+packages/core/src/skill/discovery.ts:79: HttpClient.retryTransient({
+packages/core/src/skill/discovery.ts:84: HttpClient.filterStatusOk,
+packages/core/src/skill/discovery.ts:95: http.execute,
+packages/core/src/skill/discovery.ts:117: http.execute,
+packages/core/src/tool/webfetch.ts:86: if (url.protocol !== "http:" && url.protocol !== "https:") throw new Error("URL must use http:// or https://")
+packages/core/src/tool/webfetch.ts:89: const execute = (http: HttpClient.HttpClient, url: string, format: Format, userAgent = browserUserAgent) =>
+packages/core/src/tool/webfetch.ts:90: http.execute(request(url, format, userAgent)).pipe(Effect.flatMap(HttpClientResponse.filterStatusOk))
+packages/core/src/tool/webfetch.ts:121: const http = yield* HttpClient.HttpClient
+packages/core/src/tool/websearch.ts:20: export const EXA_URL = "https://mcp.exa.ai/mcp"
+packages/core/src/tool/websearch.ts:21: export const PARALLEL_URL = "https://search.parallel.ai/mcp"
+packages/core/src/tool/websearch.ts:153: http: HttpClient.HttpClient,
+packages/core/src/tool/websearch.ts:172: const response = yield* HttpClient.filterStatusOk(http).execute(request)
+packages/core/src/tool/websearch.ts:195: const http = yield* HttpClient.HttpClient
+packages/core/src/v1/config/config.ts:42: description: "Command configuration, see https://opencode.ai/docs/commands",
+packages/core/src/v1/config/config.ts:109: ).annotate({ description: "Agent configuration, see https://opencode.ai/docs/agents" }),
+packages/core/src/v1/config/mcp.ts:39: description: "OAuth redirect URI (default: http://127.0.0.1:19876/mcp/oauth/callback).",
+packages/core/src/v1/config/skills.ts:10: description: "URLs to fetch skills from (e.g., https://example.com/.well-known/skills/)",
+packages/desktop/src/main/index.ts:376: const url = `http://${hostname}:${port}`
+packages/desktop/src/main/server.ts:145: const url = `http://${hostname}:${port}`
+packages/desktop/src/main/server.ts:202: const res = await fetch(healthUrl, {
+packages/desktop/src/main/windows.ts:330: const response = await net.fetch(pathToFileURL(file).toString(), {
+packages/desktop/src/main/wsl/runtime.ts:276: ["bash", "-lc", `curl -fsSL https://opencode.ai/install | bash -s -- --version ${shellEscape(version)}`],
+packages/desktop/src/main/wsl/sidecar.ts:70: const url = `http://127.0.0.1:${port}`
+packages/desktop/src/renderer/index.tsx:271: if (input instanceof Request) return fetch(input)
+packages/desktop/src/renderer/index.tsx:272: return fetch(input, init)
+packages/opencode/src/account/account.ts:189: const layer: Layer.Layer<Service, never, AccountRepo.Service | HttpClient.HttpClient> = Layer.effect(
+packages/opencode/src/account/account.ts:193: const http = yield* HttpClient.HttpClient
+packages/opencode/src/account/account.ts:195: const httpOk = HttpClient.filterStatusOk(http)
+packages/opencode/src/account/account.ts:196: const httpReadOk = HttpClient.filterStatusOk(httpRead)
+packages/opencode/src/account/account.ts:212: Effect.flatMap((req) => http.execute(req)),
+packages/opencode/src/acp/content.ts:62: if (block.uri?.startsWith("http://") || block.uri?.startsWith("https://")) {
+packages/opencode/src/cli/cmd/account.ts:18: export const defaultConsoleUrl = "https://opencode.ai/console"
+packages/opencode/src/cli/cmd/acp.ts:28: baseUrl: `http://${server.hostname}:${server.port}`,
+packages/opencode/src/cli/cmd/attach.ts:14: describe: "http://localhost:4096",
+packages/opencode/src/cli/cmd/github.handler.ts:188: "Configure OIDC in AWS - https://docs.github.com/en/actions/how-tos/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services"
+packages/opencode/src/cli/cmd/github.handler.ts:206: "   Learn more about the GitHub agent - https://opencode.ai/docs/github/#usage-examples",
+packages/opencode/src/cli/cmd/github.handler.ts:290: const url = "https://github.com/apps/opencode-agent"
+packages/opencode/src/cli/cmd/github.handler.ts:326: return await localFetch(`https://api.opencode.ai/get_github_app_installation?owner=${app.owner}&repo=${app.repo}`)
+packages/opencode/src/cli/cmd/github.handler.ts:432: const shareBaseUrl = isMock ? "https://dev.opencode.ai" : "https://opencode.ai"
+packages/opencode/src/cli/cmd/github.handler.ts:700: if (!value) return "https://api.opencode.ai"
+packages/opencode/src/cli/cmd/github.handler.ts:785: // ie. <img alt="Image" src="https://github.com/user-attachments/assets/xxxx" />
+packages/opencode/src/cli/cmd/github.handler.ts:786: // ie. [api.json](https://github.com/user-attachments/files/21433810/api.json)
+packages/opencode/src/cli/cmd/github.handler.ts:787: // ie. ![Image](https://github.com/user-attachments/assets/xxxx)
+packages/opencode/src/cli/cmd/github.handler.ts:1029: const config = "http.https://github.com/.extraheader"
+packages/opencode/src/cli/cmd/github.handler.ts:1047: const config = "http.https://github.com/.extraheader"
+packages/opencode/src/cli/cmd/github.handler.ts:1075: await gitRun(["remote", "add", "fork", `https://github.com/${pr.headRepository.nameWithOwner}.git`])
+packages/opencode/src/cli/cmd/github.handler.ts:1364: return `<a href="${shareBaseUrl}/s/${shareId}"><img width="200" alt="${titleAlt}" src="https://social-cards.sst.dev/opencode-share/${title64}.png?model=${providerID}/${modelID}&version=${session.version}&id=${shareId}" /></a>\n`
+packages/opencode/src/cli/cmd/github.handler.ts:1598: await localFetch("https://api.github.com/installation/token", {
+packages/opencode/src/cli/cmd/import.ts:28: /** Extract share ID from a share URL like https://opncd.ai/share/abc123 */
+packages/opencode/src/cli/cmd/import.ts:118: const isUrl = file.startsWith("http://") || file.startsWith("https://")
+packages/opencode/src/cli/cmd/mcp.ts:196: "url": "https://example.com/mcp"
+packages/opencode/src/cli/cmd/mcp.ts:582: placeholder: "e.g., https://example.com/mcp",
+packages/opencode/src/cli/cmd/pr.ts:64: yield* git.run(["remote", "add", remoteName, `https://github.com/${forkOwner}/${forkName}.git`], {
+packages/opencode/src/cli/cmd/providers.ts:468: yield* Prompt.log.info("Create an api key at https://opencode.ai/auth")
+packages/opencode/src/cli/cmd/providers.ts:472: yield* Prompt.log.info("You can create an api key at https://vercel.link/ai-gateway-token")
+packages/opencode/src/cli/cmd/providers.ts:477: "Cloudflare AI Gateway can be configured with CLOUDFLARE_GATEWAY_ID, CLOUDFLARE_ACCOUNT_ID, and CLOUDFLARE_API_TOKEN environment variables. Read more: https://opencode.ai/docs/providers/#cloudflare-ai-gateway",
+packages/opencode/src/cli/cmd/run.ts:192: describe: "attach to a running opencode server (e.g., http://localhost:4096)",
+packages/opencode/src/cli/cmd/run.ts:916: return Server.Default().app.fetch(new Request(request, { headers }))
+packages/opencode/src/cli/cmd/run.ts:954: return Server.Default().app.fetch(new Request(request, { headers }))
+packages/opencode/src/cli/cmd/run.ts:957: baseUrl: "http://opencode.internal",
+packages/opencode/src/cli/cmd/run/runtime.ts:737: baseUrl: "http://opencode.internal",
+packages/opencode/src/cli/cmd/serve.ts:20: console.log(`opencode server listening on http://${server.hostname}:${server.port}`)
+packages/opencode/src/cli/cmd/tui.ts:246: url: "http://opencode.internal",
+packages/opencode/src/cli/cmd/web.ts:51: const localhostUrl = `http://localhost:${server.port}`
+packages/opencode/src/cli/cmd/web.ts:61: `http://${ip}:${server.port}`,
+packages/opencode/src/cli/tui/worker.ts:31: async fetch(input: { url: string; method: string; headers: Record<string, string>; body?: string }) {
+packages/opencode/src/cli/tui/worker.ts:42: const response = await Server.Default().app.fetch(request)
+packages/opencode/src/config/config.ts:185: const http = yield* HttpClient.HttpClient
+packages/opencode/src/config/config.ts:212: const response = yield* HttpClient.filterStatusOk(withTransientReadRetry(http))
+packages/opencode/src/config/config.ts:251: data.$schema = "https://opencode.ai/config.json"
+packages/opencode/src/config/config.ts:252: const updated = text.replace(/^\s*\{/, '{\n  "$schema": "https://opencode.ai/config.json",')
+packages/opencode/src/config/config.ts:273: .writeWithDirs(file, JSON.stringify({ $schema: "https://opencode.ai/config.json" }, null, 2))
+packages/opencode/src/config/config.ts:288: result["$schema"] = "https://opencode.ai/config.json"
+packages/opencode/src/config/config.ts:343: if (source.startsWith("http://") || source.startsWith("https://")) return "global"
+packages/opencode/src/config/config.ts:402: if (!remoteConfig.$schema) remoteConfig.$schema = "https://opencode.ai/config.json"
+packages/opencode/src/config/tui-migrate.ts:11: const TUI_SCHEMA_URL = "https://opencode.ai/tui.json"
+packages/opencode/src/control-plane/dev/debug-workspace-plugin.ts:11: const url = `http://127.0.0.1:${port}/global/health`
+packages/opencode/src/control-plane/dev/debug-workspace-plugin.ts:66: url: `http://localhost:${PORT!}/`,
+packages/opencode/src/control-plane/workspace.ts:159: const http = yield* HttpClient.HttpClient
+packages/opencode/src/control-plane/workspace.ts:188: const response = yield* http.execute(
+packages/opencode/src/control-plane/workspace.ts:276: const response = yield* http.execute(input.remote({ workspace, target })).pipe(
+packages/opencode/src/control-plane/workspace.ts:329: const response = yield* http.execute(
+packages/opencode/src/control-plane/workspace.ts:671: const response = yield* http.execute(
+packages/opencode/src/control-plane/workspace.ts:695: const response = yield* http.execute(
+packages/opencode/src/installation/index.ts:87: const layer: Layer.Layer<Service, never, HttpClient.HttpClient | AppProcess.Service> = Layer.effect(
+packages/opencode/src/installation/index.ts:90: const http = yield* HttpClient.HttpClient
+packages/opencode/src/installation/index.ts:91: const httpOk = HttpClient.filterStatusOk(withTransientReadRetry(http))
+packages/opencode/src/installation/index.ts:148: const response = yield* httpOk.execute(HttpClientRequest.get("https://opencode.ai/install"))
+packages/opencode/src/installation/index.ts:221: HttpClientRequest.get("https://formulae.brew.sh/api/formula/opencode.json").pipe(
+packages/opencode/src/installation/index.ts:242: "https://community.chocolatey.org/api/v2/Packages?$filter=Id%20eq%20%27opencode%27%20and%20IsLatestVersion&$select=Version",
+packages/opencode/src/installation/index.ts:252: "https://raw.githubusercontent.com/ScoopInstaller/Main/master/bucket/opencode.json",
+packages/opencode/src/installation/index.ts:260: HttpClientRequest.get("https://api.github.com/repos/anomalyco/opencode/releases/latest").pipe(
+packages/opencode/src/lsp/server.ts:189: const response = await fetch("https://github.com/microsoft/vscode-eslint/archive/refs/heads/main.zip")
+packages/opencode/src/lsp/server.ts:570: const response = await fetch("https://github.com/elixir-lsp/elixir-ls/archive/refs/heads/master.zip")
+packages/opencode/src/lsp/server.ts:622: const releaseResponse = await fetch("https://api.github.com/repos/zigtools/zls/releases/latest")
+packages/opencode/src/lsp/server.ts:669: const downloadResponse = await fetch(downloadUrl)
+packages/opencode/src/lsp/server.ts:1010: const releaseResponse = await fetch("https://api.github.com/repos/clangd/clangd/releases/latest")
+packages/opencode/src/lsp/server.ts:1052: const downloadResponse = await fetch(asset.browser_download_url)
+packages/opencode/src/lsp/server.ts:1245: "https://www.eclipse.org/downloads/download.php?file=/jdtls/snapshots/jdt-language-server-latest.tar.gz"
+packages/opencode/src/lsp/server.ts:1248: const download = await fetch(releaseURL)
+packages/opencode/src/lsp/server.ts:1350: const releaseResponse = await fetch("https://api.github.com/repos/Kotlin/kotlin-lsp/releases/latest")
+packages/opencode/src/lsp/server.ts:1383: const releaseURL = `https://download-cdn.jetbrains.com/kotlin-lsp/${version}/${assetName}`
+packages/opencode/src/lsp/server.ts:1387: const download = await fetch(releaseURL)
+packages/opencode/src/lsp/server.ts:1462: const releaseResponse = await fetch("https://api.github.com/repos/LuaLS/lua-language-server/releases/latest")
+packages/opencode/src/lsp/server.ts:1507: const downloadResponse = await fetch(downloadUrl)
+packages/opencode/src/lsp/server.ts:1693: const releaseResponse = await fetch("https://api.releases.hashicorp.com/v1/releases/terraform-ls/latest")
+packages/opencode/src/lsp/server.ts:1715: const downloadResponse = await fetch(build.url)
+packages/opencode/src/lsp/server.ts:1770: const response = await fetch("https://api.github.com/repos/latex-lsp/texlab/releases/latest")
+packages/opencode/src/lsp/server.ts:1798: const downloadResponse = await fetch(asset.browser_download_url)
+packages/opencode/src/lsp/server.ts:1946: const response = await fetch("https://api.github.com/repos/Myriad-Dreamin/tinymist/releases/latest")
+packages/opencode/src/lsp/server.ts:1982: const downloadResponse = await fetch(asset.browser_download_url)
+packages/opencode/src/mcp/index.ts:42: // https://github.com/anomalyco/opencode/issues/11948
+packages/opencode/src/mcp/index.ts:44: // https://github.com/anomalyco/opencode/issues/23066
+packages/opencode/src/mcp/index.ts:46: // https://github.com/anomalyco/opencode/issues/2308
+packages/opencode/src/mcp/index.ts:48: // https://github.com/anomalyco/opencode/issues/28567
+packages/opencode/src/mcp/index.ts:707: McpCatalog.fetch(
+packages/opencode/src/mcp/index.ts:822: (oauthConfig?.callbackPort ? `http://127.0.0.1:${oauthConfig.callbackPort}${OAUTH_CALLBACK_PATH}` : undefined)
+packages/opencode/src/mcp/oauth-callback.ts:43: const url = new URL(req.url || "/", `http://localhost:${currentPort}`)
+packages/opencode/src/mcp/oauth-provider.ts:40: return `http://127.0.0.1:${port}${OAUTH_CALLBACK_PATH}`
+packages/opencode/src/mcp/oauth-provider.ts:47: client_uri: "https://opencode.ai",
+packages/opencode/src/plugin/azure.ts:9: const AZURE_COGNITIVE_SERVICES_SCOPE = "https://cognitiveservices.azure.com/.default"
+packages/opencode/src/plugin/azure.ts:10: const AZURE_FOUNDRY_SCOPE = "https://ai.azure.com/.default"
+packages/opencode/src/plugin/azure.ts:63: async fetch(input: RequestInfo | URL, init?: RequestInit) {
+packages/opencode/src/plugin/digitalocean.ts:10: const DO_AUTHORIZE_URL = "https://cloud.digitalocean.com/v1/oauth/authorize"
+packages/opencode/src/plugin/digitalocean.ts:11: const DO_API_BASE = "https://api.digitalocean.com"
+packages/opencode/src/plugin/digitalocean.ts:13: const DO_INFERENCE_BASE = "https://inference.do-ai.run/v1"
+packages/opencode/src/plugin/digitalocean.ts:49: return `http://localhost:${OAUTH_PORT}${OAUTH_REDIRECT_PATH}`
+packages/opencode/src/plugin/digitalocean.ts:66: const url = new URL(req.url || "/", `http://localhost:${OAUTH_PORT}`)
+packages/opencode/src/plugin/github-copilot/copilot.ts:22: DEVICE_CODE_URL: `https://${domain}/login/device/code`,
+packages/opencode/src/plugin/github-copilot/copilot.ts:23: ACCESS_TOKEN_URL: `https://${domain}/login/oauth/access_token`,
+packages/opencode/src/plugin/github-copilot/copilot.ts:28: return enterpriseUrl ? `https://copilot-api.${normalizeDomain(enterpriseUrl)}` : "https://api.githubcopilot.com"
+packages/opencode/src/plugin/github-copilot/copilot.ts:103: async fetch(request: RequestInfo | URL, init?: RequestInit) {
+packages/opencode/src/plugin/github-copilot/copilot.ts:209: placeholder: "company.ghe.com or https://company.ghe.com",
+packages/opencode/src/plugin/github-copilot/copilot.ts:214: const url = value.includes("://") ? new URL(value) : new URL(`https://${value}`)
+packages/opencode/src/plugin/github-copilot/copilot.ts:218: return "Please enter a valid URL (e.g., company.ghe.com or https://company.ghe.com)"
+packages/opencode/src/plugin/github-copilot/copilot.ts:316: // (See https://www.rfc-editor.org/rfc/rfc8628#section-3.5)
+packages/opencode/src/plugin/index.ts:147: baseUrl: serverUrl?.toString() ?? "http://localhost:4096",
+packages/opencode/src/plugin/index.ts:150: ...(serverUrl ? {} : { fetch: async (...args) => Server.Default().app.fetch(...args) }),
+packages/opencode/src/plugin/index.ts:164: return Server.url ?? new URL("http://localhost:4096")
+packages/opencode/src/plugin/openai/codex.ts:12: const ISSUER = "https://auth.openai.com"
+packages/opencode/src/plugin/openai/codex.ts:13: const CODEX_API_ENDPOINT = "https://chatgpt.com/backend-api/codex/responses"
+packages/opencode/src/plugin/openai/codex.ts:44: "https://api.openai.com/auth"?: {
+packages/opencode/src/plugin/openai/codex.ts:63: claims["https://api.openai.com/auth"]?.chatgpt_account_id ||
+packages/opencode/src/plugin/openai/codex.ts:84: claims?.["https://api.openai.com/auth"]?.chatgpt_compute_residency ?? claims?.chatgpt_compute_residency
+packages/opencode/src/plugin/openai/codex.ts:167: return { port: OAUTH_PORT, redirectUri: `http://localhost:${OAUTH_PORT}/auth/callback` }
+packages/opencode/src/plugin/openai/codex.ts:171: const url = new URL(req.url || "/", `http://localhost:${OAUTH_PORT}`)
+packages/opencode/src/plugin/openai/codex.ts:209: exchangeCodeForTokens(code, `http://localhost:${OAUTH_PORT}/auth/callback`, current.pkce)
+packages/opencode/src/plugin/openai/codex.ts:237: return { port: OAUTH_PORT, redirectUri: `http://localhost:${OAUTH_PORT}/auth/callback` }
+packages/opencode/src/plugin/openai/codex.ts:351: async fetch(requestInput: RequestInfo | URL, init?: RequestInit) {
+packages/opencode/src/plugin/openai/ws.ts:93: const socket = new WebSocket(options.url, connect)
+packages/opencode/src/plugin/snowflake-cortex.ts:70: return `http://${OAUTH_CALLBACK_HOST}:${oauthServerPort}${OAUTH_CALLBACK_PATH}`
+packages/opencode/src/plugin/snowflake-cortex.ts:103: return `https://${account}.snowflakecomputing.com/oauth/authorize?${params.toString()}`
+packages/opencode/src/plugin/snowflake-cortex.ts:107: const response = await localFetch(`https://${account}.snowflakecomputing.com/oauth/token-request`, {
+packages/opencode/src/plugin/snowflake-cortex.ts:138: const response = await localFetch(`https://${account}.snowflakecomputing.com/oauth/token-request`, {
+packages/opencode/src/plugin/snowflake-cortex.ts:166: const url = new URL(req.url || "/", `http://${host}`)
+packages/opencode/src/plugin/snowflake-cortex.ts:323: async fetch(requestInput: RequestInfo | URL, init?: RequestInit) {
+packages/opencode/src/plugin/xai.ts:8: const TOKEN_URL = "https://auth.x.ai/oauth2/token"
+packages/opencode/src/plugin/xai.ts:16: const DEVICE_AUTHORIZATION_URL = "https://auth.x.ai/oauth2/device/code"
+packages/opencode/src/plugin/xai.ts:222: // to https://api.x.ai/v1 and overriding here would silently route
+packages/opencode/src/plugin/xai.ts:225: async fetch(requestInput: RequestInfo | URL, init?: RequestInit) {
+packages/opencode/src/provider/error.ts:127: message: "To use Codex with your ChatGPT plan, upgrade to Plus: https://chatgpt.com/explore/plus.",
+packages/opencode/src/provider/provider.ts:100: return `https://aiplatform.${location}.rep.googleapis.com/v1/projects/${project}/locations/${location}/publishers/anthropic/models`
+packages/opencode/src/provider/provider.ts:298: ? `https://${resourceName}.cognitiveservices.azure.com/openai${provider.options?.useDeploymentBasedUrls ? "" : "/v1"}`
+packages/opencode/src/provider/provider.ts:470: "HTTP-Referer": "https://opencode.ai/",
+packages/opencode/src/provider/provider.ts:481: "HTTP-Referer": "https://opencode.ai/",
+packages/opencode/src/provider/provider.ts:491: "HTTP-Referer": "https://opencode.ai/",
+packages/opencode/src/provider/provider.ts:502: "http-referer": "https://opencode.ai/",
+packages/opencode/src/provider/provider.ts:542: const auth = new GoogleAuth({ scopes: ["https://www.googleapis.com/auth/cloud-platform"] })
+packages/opencode/src/provider/provider.ts:607: "HTTP-Referer": "https://opencode.ai/",
+packages/opencode/src/provider/provider.ts:619: const instanceUrl = (yield* dep.get("GITLAB_INSTANCE_URL")) || "https://gitlab.com"
+packages/opencode/src/provider/provider.ts:875: baseURL: `https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/v1`,
+packages/opencode/src/provider/provider.ts:897: "HTTP-Referer": "https://opencode.ai/",
+packages/opencode/src/provider/provider.ts:931: const baseURL = `https://${account}.snowflakecomputing.com/api/v2/cortex/v1`
+packages/opencode/src/provider/provider.ts:1823: // @ts-ignore see here: https://github.com/oven-sh/bun/issues/16682
+packages/opencode/src/provider/transform.ts:689: // https://platform.claude.com/docs/en/build-with-claude/thinking#preserved-in-conversation
+packages/opencode/src/provider/transform.ts:843: // see: https://docs.x.ai/docs/guides/reasoning#control-how-hard-the-model-thinks
+packages/opencode/src/provider/transform.ts:972: // https://v5.ai-sdk.dev/providers/ai-sdk-providers/cerebras
+packages/opencode/src/provider/transform.ts:974: // https://v5.ai-sdk.dev/providers/ai-sdk-providers/togetherai
+packages/opencode/src/provider/transform.ts:976: // https://v5.ai-sdk.dev/providers/ai-sdk-providers/xai
+packages/opencode/src/provider/transform.ts:978: // https://v5.ai-sdk.dev/providers/ai-sdk-providers/deepinfra
+packages/opencode/src/provider/transform.ts:980: // https://docs.venice.ai/overview/guides/reasoning-models#reasoning-effort
+packages/opencode/src/provider/transform.ts:992: // https://v5.ai-sdk.dev/providers/ai-sdk-providers/azure
+packages/opencode/src/provider/transform.ts:1018: // https://v5.ai-sdk.dev/providers/ai-sdk-providers/openai
+packages/opencode/src/provider/transform.ts:1033: // https://v5.ai-sdk.dev/providers/ai-sdk-providers/anthropic
+packages/opencode/src/provider/transform.ts:1035: // https://v5.ai-sdk.dev/providers/ai-sdk-providers/google-vertex#anthropic-provider
+packages/opencode/src/provider/transform.ts:1081: // https://v5.ai-sdk.dev/providers/ai-sdk-providers/amazon-bedrock
+packages/opencode/src/provider/transform.ts:1128: // https://v5.ai-sdk.dev/providers/ai-sdk-providers/google-vertex
+packages/opencode/src/provider/transform.ts:1130: // https://v5.ai-sdk.dev/providers/ai-sdk-providers/google-generative-ai
+packages/opencode/src/provider/transform.ts:1134: // https://v5.ai-sdk.dev/providers/ai-sdk-providers/mistral
+packages/opencode/src/provider/transform.ts:1135: // https://docs.mistral.ai/capabilities/reasoning/adjustable
+packages/opencode/src/provider/transform.ts:1151: // https://v5.ai-sdk.dev/providers/ai-sdk-providers/cohere
+packages/opencode/src/provider/transform.ts:1155: // https://v5.ai-sdk.dev/providers/ai-sdk-providers/groq
+packages/opencode/src/provider/transform.ts:1167: // https://v5.ai-sdk.dev/providers/ai-sdk-providers/perplexity
+packages/opencode/src/server/routes/instance/httpapi/handlers/pty.ts:195: const ticket = new URL(ctx.request.url, "http://localhost").searchParams.get(PTY_CONNECT_TICKET_QUERY)
+packages/opencode/src/server/routes/instance/httpapi/handlers/session.ts:135: const url = Option.getOrElse(HttpServerRequest.toURL(request), () => new URL(request.url, "http://localhost"))
+packages/opencode/src/server/routes/instance/httpapi/middleware/authorization.ts:74: return credentialFromURL(new URL(request.url, "http://localhost"), request)
+packages/opencode/src/server/routes/instance/httpapi/middleware/authorization.ts:109: const url = new URL(request.url, "http://localhost")
+packages/opencode/src/server/routes/instance/httpapi/middleware/authorization.ts:142: const url = new URL(request.url, "http://localhost")
+packages/opencode/src/server/routes/instance/httpapi/middleware/proxy.ts:84: client: HttpClient.HttpClient,
+packages/opencode/src/server/routes/instance/httpapi/middleware/workspace-routing.ts:62: return new URL(request.url, "http://localhost")
+packages/opencode/src/server/routes/instance/httpapi/middleware/workspace-routing.ts:114: client: HttpClient.HttpClient,
+packages/opencode/src/server/routes/instance/httpapi/middleware/workspace-routing.ts:189: client: HttpClient.HttpClient,
+packages/opencode/src/server/routes/instance/httpapi/middleware/workspace-routing.ts:213: client: HttpClient.HttpClient,
+packages/opencode/src/server/routes/instance/httpapi/middleware/workspace-routing.ts:242: const client = yield* HttpClient.HttpClient
+packages/opencode/src/server/routes/instance/httpapi/server.ts:197: const client = yield* HttpClient.HttpClient
+packages/opencode/src/server/server.ts:17: // @ts-ignore This global is needed to prevent ai-sdk from logging warnings to stdout https://github.com/vercel/ai/blob/2dc67e0ef538307f21368db32d5a12345d98831b/packages/ai/src/logger/log-warnings.ts#L85
+packages/opencode/src/server/server.ts:28: fetch(request: Request): Response | Promise<Response>
+packages/opencode/src/server/server.ts:61: return app.fetch(input instanceof Request ? input : new Request(new URL(input, "http://localhost"), init))
+packages/opencode/src/server/server.ts:149: const result = new URL("http://localhost")
+packages/opencode/src/server/server.ts:196: return Effect.all([state.http.closeAll, state.websockets.closeAll], { concurrency: "unbounded", discard: true })
+packages/opencode/src/server/shared/ui.ts:10: export const UI_UPSTREAM = new URL("https://app.opencode.ai")
+packages/opencode/src/server/shared/ui.ts:105: services: { fs: FSUtil.Interface; client: HttpClient.HttpClient; disableEmbeddedWebUi: boolean },
+packages/opencode/src/server/shared/ui.ts:109: const path = new URL(request.url, "http://localhost").pathname
+packages/opencode/src/session/instruction.ts:52: FSUtil.Service | Config.Service | Global.Service | HttpClient.HttpClient | RuntimeFlags.Service
+packages/opencode/src/session/instruction.ts:60: const http = HttpClient.filterStatusOk(withTransientReadRetry(yield* HttpClient.HttpClient))
+packages/opencode/src/session/instruction.ts:98: const res = yield* http.execute(HttpClientRequest.get(url)).pipe(
+packages/opencode/src/session/instruction.ts:139: if (raw.startsWith("https://") || raw.startsWith("http://")) continue
+packages/opencode/src/session/instruction.ts:161: (item) => item.startsWith("https://") || item.startsWith("http://"),
+packages/opencode/src/session/llm/native-runtime.ts:144: stream: fetch ? stream.pipe(Stream.provideService(FetchHttpClient.Fetch, fetch)) : stream,
+packages/opencode/src/session/message-v2.ts:39: /** Error shape thrown by Bun's fetch() when gzip/br decompression fails mid-stream */
+packages/opencode/src/session/retry.ts:11: export const GO_UPSELL_URL = "https://opencode.ai/go"
+packages/opencode/src/session/retry.ts:132: const link = `https://opencode.ai/workspace/${workspace}/go`
+packages/opencode/src/share/share-next.ts:119: const http = yield* HttpClient.HttpClient
+packages/opencode/src/share/share-next.ts:120: const httpOk = HttpClient.filterStatusOk(http)
+packages/opencode/src/share/share-next.ts:210: const baseUrl = (yield* cfg.get()).enterprise?.url ?? "https://opncd.ai"
+packages/opencode/src/share/share-next.ts:262: Effect.flatMap((r) => http.execute(r)),
+packages/opencode/src/skill/discovery.ts:31: const layer: Layer.Layer<Service, never, FSUtil.Service | Path.Path | HttpClient.HttpClient> = Layer.effect(
+packages/opencode/src/skill/discovery.ts:36: const http = HttpClient.filterStatusOk(withTransientReadRetry(yield* HttpClient.HttpClient))
+packages/opencode/src/skill/discovery.ts:48: http.execute,
+packages/opencode/src/skill/discovery.ts:70: http.execute,
+packages/opencode/src/tool/edit.ts:2: // https://github.com/cline/cline/blob/main/evals/diff-edits/diff-apply/diff-06-23-25.ts
+packages/opencode/src/tool/edit.ts:3: // https://github.com/google-gemini/gemini-cli/blob/main/packages/core/src/utils/editCorrector.ts
+packages/opencode/src/tool/edit.ts:4: // https://github.com/cline/cline/blob/main/evals/diff-edits/diff-apply/diff-06-26-25.ts
+packages/opencode/src/tool/mcp-websearch.ts:5: ? `https://mcp.exa.ai/mcp?exaApiKey=${encodeURIComponent(process.env.EXA_API_KEY)}`
+packages/opencode/src/tool/mcp-websearch.ts:6: : "https://mcp.exa.ai/mcp"
+packages/opencode/src/tool/mcp-websearch.ts:7: export const PARALLEL_URL = "https://search.parallel.ai/mcp"
+packages/opencode/src/tool/mcp-websearch.ts:70: http: HttpClient.HttpClient,
+packages/opencode/src/tool/mcp-websearch.ts:89: const response = yield* HttpClient.filterStatusOk(http)
+packages/opencode/src/tool/webfetch.ts:27: const http = yield* HttpClient.HttpClient
+packages/opencode/src/tool/webfetch.ts:28: const httpOk = HttpClient.filterStatusOk(http)
+packages/opencode/src/tool/webfetch.ts:35: if (!params.url.startsWith("http://") && !params.url.startsWith("https://")) {
+packages/opencode/src/tool/webfetch.ts:36: throw new Error("URL must start with http:// or https://")
+packages/opencode/src/tool/websearch.ts:61: http: HttpClient.HttpClient,
+packages/opencode/src/tool/websearch.ts:102: const http = yield* HttpClient.HttpClient
+packages/opencode/src/util/effect-http-client.ts:4: export const withTransientReadRetry = <E, R>(client: HttpClient.HttpClient.With<E, R>) =>
+packages/opencode/src/util/effect-http-client.ts:6: HttpClient.retryTransient({
+packages/opencode/src/util/proxy-env.ts:2: * Adapted from proxy-from-env: https://github.com/Rob--W/proxy-from-env
+packages/opencode/src/util/repository.ts:101: if (!base) return `https://github.com/${pathname}.git`
+packages/opencode/src/util/repository.ts:117: remote: input.remote ?? (host === "github.com" ? githubRemote(pathname) : `https://${host}/${pathname}.git`),
+packages/tui/src/app.tsx:822: open("https://opencode.ai/docs").catch(() => {})
+packages/tui/src/component/dialog-provider.tsx:378: Go to <span style={{ fg: theme.primary }}>https://opencode.ai/zen</span> to get a key
+packages/tui/src/component/dialog-provider.tsx:389: Go to <span style={{ fg: theme.primary }}>https://opencode.ai/go</span> and enable OpenCode Go
+packages/tui/src/component/dialog-retry-action.tsx:10: const GO_URL = "https://opencode.ai/go"
+packages/tui/src/component/error-component.tsx:207: const url = new URL("https://github.com/anomalyco/opencode/issues/new?template=bug-report.yml")
+packages/tui/src/parsers-config.ts:12: wasm: "https://github.com/tree-sitter/tree-sitter-python/releases/download/v0.23.6/tree-sitter-python.wasm",
+packages/tui/src/parsers-config.ts:18: // "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/python/highlights.scm",
+packages/tui/src/parsers-config.ts:19: "https://github.com/tree-sitter/tree-sitter-python/raw/refs/heads/master/queries/highlights.scm",
+packages/tui/src/parsers-config.ts:22: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/python/locals.scm",
+packages/tui/src/parsers-config.ts:28: wasm: "https://github.com/tree-sitter/tree-sitter-rust/releases/download/v0.24.0/tree-sitter-rust.wasm",
+packages/tui/src/parsers-config.ts:31: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/rust/highlights.scm",
+packages/tui/src/parsers-config.ts:34: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/rust/locals.scm",
+packages/tui/src/parsers-config.ts:40: wasm: "https://github.com/tree-sitter/tree-sitter-go/releases/download/v0.25.0/tree-sitter-go.wasm",
+packages/tui/src/parsers-config.ts:43: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/go/highlights.scm",
+packages/tui/src/parsers-config.ts:46: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/go/locals.scm",
+packages/tui/src/parsers-config.ts:52: wasm: "https://github.com/tree-sitter/tree-sitter-cpp/releases/download/v0.23.4/tree-sitter-cpp.wasm",
+packages/tui/src/parsers-config.ts:55: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/cpp/highlights.scm",
+packages/tui/src/parsers-config.ts:58: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/cpp/locals.scm",
+packages/tui/src/parsers-config.ts:64: wasm: "https://github.com/tree-sitter/tree-sitter-c-sharp/releases/download/v0.23.1/tree-sitter-c_sharp.wasm",
+packages/tui/src/parsers-config.ts:67: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/c_sharp/highlights.scm",
+packages/tui/src/parsers-config.ts:70: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/c_sharp/locals.scm",
+packages/tui/src/parsers-config.ts:76: wasm: "https://github.com/tree-sitter/tree-sitter-bash/releases/download/v0.25.0/tree-sitter-bash.wasm",
+packages/tui/src/parsers-config.ts:79: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/bash/highlights.scm",
+packages/tui/src/parsers-config.ts:85: wasm: "https://github.com/tree-sitter/tree-sitter-c/releases/download/v0.24.1/tree-sitter-c.wasm",
+packages/tui/src/parsers-config.ts:88: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/c/highlights.scm",
+packages/tui/src/parsers-config.ts:91: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/c/locals.scm",
+packages/tui/src/parsers-config.ts:97: wasm: "https://github.com/tree-sitter/tree-sitter-java/releases/download/v0.23.5/tree-sitter-java.wasm",
+packages/tui/src/parsers-config.ts:100: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/java/highlights.scm",
+packages/tui/src/parsers-config.ts:103: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/java/locals.scm",
+packages/tui/src/parsers-config.ts:109: wasm: "https://github.com/fwcd/tree-sitter-kotlin/releases/download/0.3.8/tree-sitter-kotlin.wasm",
+packages/tui/src/parsers-config.ts:111: highlights: ["https://raw.githubusercontent.com/fwcd/tree-sitter-kotlin/0.3.8/queries/highlights.scm"],
+packages/tui/src/parsers-config.ts:112: locals: ["https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/master/queries/kotlin/locals.scm"],
+packages/tui/src/parsers-config.ts:117: wasm: "https://github.com/tree-sitter/tree-sitter-ruby/releases/download/v0.23.1/tree-sitter-ruby.wasm",
+packages/tui/src/parsers-config.ts:120: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/ruby/highlights.scm",
+packages/tui/src/parsers-config.ts:123: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/ruby/locals.scm",
+packages/tui/src/parsers-config.ts:129: wasm: "https://github.com/tree-sitter/tree-sitter-php/releases/download/v0.24.2/tree-sitter-php.wasm",
+packages/tui/src/parsers-config.ts:133: // "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/php/highlights.scm",
+packages/tui/src/parsers-config.ts:134: "https://github.com/tree-sitter/tree-sitter-php/raw/refs/heads/master/queries/highlights.scm",
+packages/tui/src/parsers-config.ts:140: wasm: "https://github.com/tree-sitter/tree-sitter-scala/releases/download/v0.24.0/tree-sitter-scala.wasm",
+packages/tui/src/parsers-config.ts:143: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/scala/highlights.scm",
+packages/tui/src/parsers-config.ts:149: wasm: "https://github.com/tree-sitter/tree-sitter-html/releases/download/v0.23.2/tree-sitter-html.wasm",
+packages/tui/src/parsers-config.ts:153: // "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/html/highlights.scm",
+packages/tui/src/parsers-config.ts:154: "https://github.com/tree-sitter/tree-sitter-html/raw/refs/heads/master/queries/highlights.scm",
+packages/tui/src/parsers-config.ts:158: //   "https://github.com/tree-sitter/tree-sitter-html/raw/refs/heads/master/queries/injections.scm",
+packages/tui/src/parsers-config.ts:174: wasm: "https://github.com/anomalyco/tree-sitter-vue/releases/download/v0.1.2/tree-sitter-vue.wasm",
+packages/tui/src/parsers-config.ts:177: "https://raw.githubusercontent.com/anomalyco/tree-sitter-vue/v0.1.2/queries/html_tags/highlights.scm",
+packages/tui/src/parsers-config.ts:178: "https://raw.githubusercontent.com/anomalyco/tree-sitter-vue/v0.1.2/queries/vue/highlights.scm",
+packages/tui/src/parsers-config.ts:184: wasm: "https://github.com/tree-sitter-grammars/tree-sitter-hcl/releases/download/v1.2.0/tree-sitter-hcl.wasm",
+packages/tui/src/parsers-config.ts:187: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/master/queries/hcl/highlights.scm",
+packages/tui/src/parsers-config.ts:193: wasm: "https://github.com/tree-sitter/tree-sitter-json/releases/download/v0.24.8/tree-sitter-json.wasm",
+packages/tui/src/parsers-config.ts:196: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/json/highlights.scm",
+packages/tui/src/parsers-config.ts:202: wasm: "https://github.com/tree-sitter-grammars/tree-sitter-yaml/releases/download/v0.7.2/tree-sitter-yaml.wasm",
+packages/tui/src/parsers-config.ts:205: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/yaml/highlights.scm",
+packages/tui/src/parsers-config.ts:211: wasm: "https://github.com/tree-sitter/tree-sitter-haskell/releases/download/v0.23.1/tree-sitter-haskell.wasm",
+packages/tui/src/parsers-config.ts:214: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/haskell/highlights.scm",
+packages/tui/src/parsers-config.ts:220: wasm: "https://github.com/tree-sitter/tree-sitter-css/releases/download/v0.25.0/tree-sitter-css.wasm",
+packages/tui/src/parsers-config.ts:223: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/css/highlights.scm",
+packages/tui/src/parsers-config.ts:229: wasm: "https://github.com/tree-sitter/tree-sitter-julia/releases/download/v0.23.1/tree-sitter-julia.wasm",
+packages/tui/src/parsers-config.ts:232: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/julia/highlights.scm",
+packages/tui/src/parsers-config.ts:238: wasm: "https://github.com/tree-sitter-grammars/tree-sitter-lua/releases/download/v0.5.0/tree-sitter-lua.wasm",
+packages/tui/src/parsers-config.ts:241: "https://raw.githubusercontent.com/tree-sitter-grammars/tree-sitter-lua/v0.5.0/queries/highlights.scm",
+packages/tui/src/parsers-config.ts:243: locals: ["https://raw.githubusercontent.com/tree-sitter-grammars/tree-sitter-lua/v0.5.0/queries/locals.scm"],
+packages/tui/src/parsers-config.ts:248: wasm: "https://github.com/tree-sitter/tree-sitter-ocaml/releases/download/v0.24.2/tree-sitter-ocaml.wasm",
+packages/tui/src/parsers-config.ts:251: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/ocaml/highlights.scm",
+packages/tui/src/parsers-config.ts:258: wasm: "https://github.com/anomalyco/tree-sitter-clojure/releases/download/v0.0.1/tree-sitter-clojure.wasm",
+packages/tui/src/parsers-config.ts:261: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/clojure/highlights.scm",
+packages/tui/src/parsers-config.ts:267: wasm: "https://github.com/alex-pinkus/tree-sitter-swift/releases/download/0.7.1/tree-sitter-swift.wasm",
+packages/tui/src/parsers-config.ts:271: // "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/highlights.scm
+packages/tui/src/parsers-config.ts:272: "https://raw.githubusercontent.com/alex-pinkus/tree-sitter-swift/0.7.1/queries/highlights.scm",
+packages/tui/src/parsers-config.ts:275: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/swift/locals.scm",
+packages/tui/src/parsers-config.ts:281: wasm: "https://github.com/tree-sitter-grammars/tree-sitter-toml/releases/download/v0.7.0/tree-sitter-toml.wasm",
+packages/tui/src/parsers-config.ts:284: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/master/queries/toml/highlights.scm",
+packages/tui/src/parsers-config.ts:291: // See: https://github.com/nix-community/tree-sitter-nix/issues/66
+packages/tui/src/parsers-config.ts:292: wasm: "https://github.com/ast-grep/ast-grep.github.io/raw/40b84530640aa83a0d34a20a2b0623d7b8e5ea97/website/public/parsers/tree-sitter-nix.wasm",
+packages/tui/src/parsers-config.ts:295: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/nix/highlights.scm",
+packages/tui/src/parsers-config.ts:298: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/nix/locals.scm",
+packages/tui/src/parsers-config.ts:305: wasm: "https://github.com/tree-sitter-grammars/tree-sitter-diff/releases/download/v0.1.0/tree-sitter-diff.wasm",
+packages/tui/src/parsers-config.ts:308: "https://raw.githubusercontent.com/tree-sitter-grammars/tree-sitter-diff/2520c3f934b3179bb540d23e0ef45f75304b5fed/queries/highlights.scm",
+packages/tui/src/parsers-config.ts:314: wasm: "https://github.com/elixir-lang/tree-sitter-elixir/releases/download/v0.3.5/tree-sitter-elixir.wasm",
+packages/tui/src/parsers-config.ts:317: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/elixir/highlights.scm",
+packages/tui/src/parsers-config.ts:320: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/elixir/locals.scm",
+packages/tui/src/parsers-config.ts:326: wasm: "https://github.com/ionide/tree-sitter-fsharp/releases/download/0.3.0/tree-sitter-fsharp.wasm",
+packages/tui/src/parsers-config.ts:329: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/fsharp/highlights.scm",
+packages/tui/src/parsers-config.ts:335: wasm: "https://github.com/r-lib/tree-sitter-r/releases/download/v1.2.0/tree-sitter-r.wasm",
+packages/tui/src/parsers-config.ts:338: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/r/highlights.scm",
+packages/tui/src/parsers-config.ts:341: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/r/locals.scm",
+packages/tui/src/parsers-config.ts:348: wasm: "https://github.com/tree-sitter-grammars/tree-sitter-make/releases/download/v1.1.1/tree-sitter-make.wasm",
+packages/tui/src/parsers-config.ts:351: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/make/highlights.scm",
+packages/tui/src/parsers-config.ts:357: wasm: "https://github.com/tree-sitter-grammars/tree-sitter-vim/releases/download/v0.8.1/tree-sitter-vim.wasm",
+packages/tui/src/parsers-config.ts:360: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/vim/highlights.scm",
+packages/tui/src/parsers-config.ts:363: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/vim/locals.scm",
+packages/tui/src/parsers-config.ts:369: wasm: "https://github.com/tree-sitter-grammars/tree-sitter-xml/releases/download/v0.7.0/tree-sitter-xml.wasm",
+packages/tui/src/parsers-config.ts:372: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/xml/highlights.scm",
+packages/tui/src/parsers-config.ts:375: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/xml/locals.scm",
+packages/tui/src/parsers-config.ts:381: wasm: "https://github.com/tree-sitter/tree-sitter-agda/releases/download/v1.3.3/tree-sitter-agda.wasm",
+packages/tui/src/parsers-config.ts:384: "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/refs/heads/master/queries/agda/highlights.scm",

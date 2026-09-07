@@ -2,6 +2,7 @@ export * as PluginInternal from "./internal"
 
 import { makeLocationNode } from "../effect/app-node"
 import { httpClient } from "../effect/app-node-platform"
+import { localFetch } from "../air-gap-network"
 import type { PluginContext } from "@opencode-ai/plugin/v2/effect"
 import { Effect, Layer, Scope } from "effect"
 import { AgentV2 } from "../agent"
@@ -126,7 +127,7 @@ const layer = Layer.effectDiscard(
 
 export const locationLayer = layer.pipe(
   Layer.provideMerge(Config.locationLayer),
-  Layer.provideMerge(FetchHttpClient.layer),
+  Layer.provideMerge(FetchHttpClient.layer.pipe(Layer.provide(Layer.succeed(FetchHttpClient.Fetch, localFetch)))),
 )
 
 export const node = makeLocationNode({

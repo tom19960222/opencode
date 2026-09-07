@@ -20,6 +20,7 @@ import { Global } from "@opencode-ai/core/global"
 import { modify, applyEdits } from "jsonc-parser"
 import { Filesystem } from "@/util/filesystem"
 import { Effect } from "effect"
+import { localFetch } from "@opencode-ai/core/air-gap-network"
 
 function getAuthStatusIcon(status: MCP.AuthStatus): string {
   switch (status) {
@@ -733,7 +734,7 @@ export const McpDebugCommand = effectCmd({
 
       // Test basic HTTP connectivity first
       try {
-        const response = await fetch(serverConfig.url, {
+        const response = await localFetch(serverConfig.url, {
           method: "POST",
           headers: {
             ...serverConfig.headers,
@@ -785,6 +786,7 @@ export const McpDebugCommand = effectCmd({
           // Try creating transport with auth provider to trigger discovery
           const transport = new StreamableHTTPClientTransport(new URL(serverConfig.url), {
             authProvider,
+            fetch: localFetch,
             requestInit: serverConfig.headers ? { headers: serverConfig.headers } : undefined,
           })
 

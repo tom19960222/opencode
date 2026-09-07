@@ -31,6 +31,8 @@ import { ModelV2 } from "@opencode-ai/core/model"
 import { ModelStatus } from "./model-status"
 import { RuntimeFlags } from "@/effect/runtime-flags"
 import { ProviderError } from "./error"
+import { localFetch, requireLocal } from "@opencode-ai/core/air-gap-network"
+import { Flag } from "@opencode-ai/core/flag/flag"
 
 const OPENAI_HEADER_TIMEOUT_DEFAULT = 300_000
 
@@ -544,7 +546,7 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
             const headers = new Headers(init?.headers)
             headers.set("Authorization", `Bearer ${token.token}`)
 
-            return fetch(input, { ...init, headers })
+            return localFetch(input, { ...init, headers })
           },
         },
         async getModel(sdk: any, modelID: string) {
@@ -950,7 +952,7 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
             } catch {}
           }
 
-          const response = await fetch(url, init)
+          const response = await localFetch(url, init)
 
           if (!response.ok && response.status === 400) {
             try {
@@ -1798,7 +1800,8 @@ const layer = Layer.effect(
         delete options["headerTimeout"]
 
         options["fetch"] = async (input: any, init?: BunFetchRequestInit) => {
-          const fetchFn = customFetch ?? fetch
+          requireLocal(input)
+          const fetchFn = customFetch ?? localFetch
           const opts = init ?? {}
           const chunkAbortCtl = typeof chunkTimeout === "number" && chunkTimeout > 0 ? new AbortController() : undefined
           const headerTimeoutMs = headerTimeout === false ? undefined : headerTimeout
@@ -1816,6 +1819,7 @@ const layer = Layer.effect(
 
           const res = await fetchFn(input, {
             ...opts,
+            ...(Flag.OPENCODE_AIR_GAPPED ? { redirect: "error" as const } : {}),
             // @ts-ignore see here: https://github.com/oven-sh/bun/issues/16682
             timeout: false,
           }).finally(() => headerTimeoutCtl?.clear())

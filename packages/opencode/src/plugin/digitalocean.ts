@@ -2,6 +2,7 @@ import type { Hooks, PluginInput } from "@opencode-ai/plugin"
 import type { Model } from "@opencode-ai/sdk/v2"
 import { InstallationVersion } from "@opencode-ai/core/installation/version"
 import { OauthCallbackPage } from "@opencode-ai/core/oauth/page"
+import { localFetch } from "@opencode-ai/core/air-gap-network"
 import { createServer } from "http"
 import open from "open"
 
@@ -167,7 +168,7 @@ function waitForOAuthCallback(state: string): Promise<ImplicitTokenPayload> {
 async function listRouters(
   bearer: string,
 ): Promise<{ ok: true; routers: RouterEntry[] } | { ok: false; status: number }> {
-  const res = await fetch(`${DO_GENAI_API}/models/routers`, {
+  const res = await localFetch(`${DO_GENAI_API}/models/routers`, {
     headers: {
       Authorization: `Bearer ${bearer}`,
       Accept: "application/json",

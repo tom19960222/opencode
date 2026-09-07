@@ -8,6 +8,7 @@ import { Config } from "@/config/config"
 import { InstanceState } from "@/effect/instance-state"
 import { RuntimeFlags } from "@/effect/runtime-flags"
 import { Flag } from "@opencode-ai/core/flag/flag"
+import { AirGap } from "@opencode-ai/core/air-gap"
 import { FSUtil } from "@opencode-ai/core/fs-util"
 import { withTransientReadRetry } from "@/util/effect-http-client"
 import { Global } from "@opencode-ai/core/global"
@@ -93,6 +94,7 @@ const layer: Layer.Layer<
     })
 
     const fetch = Effect.fnUntraced(function* (url: string) {
+      if (Flag.OPENCODE_AIR_GAPPED) return yield* Effect.promise(() => AirGap.read(url).then((body) => body.toString()))
       const res = yield* http.execute(HttpClientRequest.get(url)).pipe(
         Effect.timeout(5000),
         Effect.catch(() => Effect.succeed(null)),

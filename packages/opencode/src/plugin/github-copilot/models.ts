@@ -1,5 +1,6 @@
 import type { Model } from "@opencode-ai/sdk/v2"
 import { Option, Schema } from "effect"
+import { localFetch } from "@opencode-ai/core/air-gap-network"
 
 const item = Schema.Struct({
   model_picker_enabled: Schema.Boolean,
@@ -218,7 +219,7 @@ export async function get(
   headers: HeadersInit = {},
   existing: Record<string, Model> = {},
 ): Promise<{ models: Record<string, Model>; pickerEnabled: Set<string> }> {
-  const data = await fetch(`${baseURL}/models`, {
+  const data = await localFetch(`${baseURL}/models`, {
     headers,
     signal: AbortSignal.timeout(5_000),
   }).then(async (res) => {

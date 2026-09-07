@@ -1,0 +1,60 @@
+{
+  "dotnet": {
+    "name": "dotnet",
+    "version": "10.0.400",
+    "archive": "dotnet-sdk-10.0.400-linux-x64.tar.gz",
+    "url": "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.400/dotnet-sdk-10.0.400-linux-x64.tar.gz",
+    "sha512": "1033977dd837150e0814cf0c5d5b17ceb63925fda7ba2158b47258a4bd7c048cf82eac3bc1166f3146f53124a3f5fba09db1de1260d2ce96399860303b404b48",
+    "provenance": "https://dotnet.microsoft.com/download/dotnet/10.0",
+    "license": "MIT",
+    "licenseSource": "https://github.com/dotnet/runtime/blob/main/LICENSE.TXT",
+    "noticeFiles": ["LICENSE.txt", "ThirdPartyNotices.txt"],
+    "runtimeLibraries": {
+      "distribution": "Ubuntu",
+      "release": "24.04.4 LTS",
+      "packages": {
+        "libicu74": "74.2-1ubuntu3.1",
+        "libssl3t64": "3.0.13-0ubuntu3.15",
+        "zlib1g": "1:1.3.dfsg-3.1ubuntu2.2"
+      },
+      "directory": "runtime-libs",
+      "licenseDirectory": "runtime-libs/licenses/ubuntu24"
+    }
+  },
+  "roslyn": {
+    "name": "roslyn-language-server",
+    "package": "roslyn-language-server.linux-x64",
+    "version": "5.12.0-1.26426.8",
+    "archive": "roslyn-language-server.linux-x64.5.12.0-1.26426.8.nupkg",
+    "url": "https://api.nuget.org/v3-flatcontainer/roslyn-language-server.linux-x64/5.12.0-1.26426.8/roslyn-language-server.linux-x64.5.12.0-1.26426.8.nupkg",
+    "sha256": "50f88435f5875640fb2341878618dbfaec4354a1a134efcac0ae557247448a58",
+    "sha512": "3ac2eae3aa3dd77bbe5c491653abfb5f56a306bcbe82dfe6dd73290fe97bef5f040bd7b831ef4e2ca4f726128b5727894cbd278a9e12bd377dffcbf924496c3c",
+    "provenance": "https://www.nuget.org/packages/roslyn-language-server.linux-x64/5.12.0-1.26426.8",
+    "repository": "https://github.com/dotnet/roslyn/tree/3aeb96c9ecc56a5ee483558f9e648e33e7bfe756",
+    "license": "MIT",
+    "licenseSource": "https://github.com/dotnet/roslyn/blob/main/License.txt",
+    "noticeFiles": ["ThirdPartyNotices.rtf"]
+  },
+  "fsharp": {
+    "name": "fsautocomplete",
+    "package": "fsautocomplete",
+    "version": "0.84.0",
+    "archive": "fsautocomplete.0.84.0.nupkg",
+    "url": "https://api.nuget.org/v3-flatcontainer/fsautocomplete/0.84.0/fsautocomplete.0.84.0.nupkg",
+    "sha256": "6ccd0ab16b208fccf2d4374b109ed0ca4bbb8d77a28a7e7e2ff32f6e0e1ba513",
+    "sha512": "6d669662a9d7d979ff3c896b7701f6ef28cef8dd9998c42e76ea4c386160f570aff2738b51b0fef2c3e45be1be5cb64f15145f6eb5b1d9452d8fd0e3a5e5f5f0",
+    "provenance": "https://www.nuget.org/packages/fsautocomplete/0.84.0",
+    "repository": "https://github.com/ionide/FsAutoComplete/tree/0.84.0",
+    "license": "Apache-2.0",
+    "licenseSource": "https://licenses.nuget.org/Apache-2.0",
+    "noticeFiles": []
+  },
+  "razor": {
+    "name": "csharp-razor-extension",
+    "status": "not-bundled",
+    "requiredBy": "packages/opencode/src/lsp/server.ts",
+    "source": "https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp",
+    "licenseSource": "https://github.com/dotnet/vscode-csharp/blob/main/RuntimeLicenses/license.txt",
+    "reason": "The Microsoft C# extension runtime terms restrict use to Visual Studio, Visual Studio Code, or Xamarin Studio and prohibit sharing it as a standalone offering."
+  }
+}

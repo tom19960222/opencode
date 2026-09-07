@@ -12,6 +12,7 @@ import path from "path"
 import { FSUtil } from "@opencode-ai/core/fs-util"
 import { Effect, Schema } from "effect"
 import type { InstanceContext } from "@/project/instance-context"
+import { localFetch } from "@opencode-ai/core/air-gap-network"
 
 const decodeMessageInfo = Schema.decodeUnknownSync(SessionV1.Info)
 const decodePart = Schema.decodeUnknownSync(SessionV1.Part)
@@ -131,7 +132,7 @@ const runImport = Effect.fn("Cli.import.body")(function* (file: string, ctx: Ins
 
     const tryFetch = (url: string) =>
       Effect.tryPromise({
-        try: () => fetch(url, { headers }),
+        try: () => localFetch(url, { headers }),
         catch: (e) =>
           new CliError({
             message: `Failed to fetch share data: ${e instanceof Error ? e.message : String(e)}`,

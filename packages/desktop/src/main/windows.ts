@@ -16,6 +16,7 @@ import { nativeT } from "./native-translations"
 import { createWindowRegistry } from "./window-registry"
 import { safeWindowURL } from "./window-state"
 import { resolveExternalURL, resolveLocalFilePath } from "./external-url"
+import { airGapped, allowsAirGapURL } from "./air-gap"
 
 const root = dirname(fileURLToPath(import.meta.url))
 const rendererRoot = join(root, "../renderer")
@@ -45,6 +46,7 @@ protocol.registerSchemesAsPrivileged([
 ])
 
 let backgroundColor: string | undefined
+let rendererNetworkGuardRegistered = false
 let relaunchHandler = () => {
   setAppQuitting()
   app.relaunch()
@@ -207,6 +209,7 @@ export function createMainWindow(id: string = randomUUID()) {
   allowRendererPermissions(win)
   wireWindowRecovery(win, id)
   wireNavigationPolicy(win)
+  registerRendererNetworkPolicy(win)
 
   win.webContents.session.webRequest.onBeforeSendHeaders((details, callback) => {
     const { requestHeaders } = details
@@ -239,6 +242,10 @@ export function openExternalURL(value: string) {
     writeLog("window", "blocked external target", { url: value }, "warn")
     return
   }
+  if (airGapped() && !allowsAirGapURL(url)) {
+    writeLog("window", "blocked air-gapped external target", { url }, "warn")
+    return
+  }
   void shell.openExternal(url)
 }
 
@@ -264,6 +271,19 @@ function wireNavigationPolicy(win: BrowserWindow) {
     if (isRendererUrl(url)) return
     event.preventDefault()
     openExternalURL(url)
+  })
+}
+
+function registerRendererNetworkPolicy(win: BrowserWindow) {
+  if (rendererNetworkGuardRegistered) return
+  rendererNetworkGuardRegistered = true
+  win.webContents.session.webRequest.onBeforeRequest((details, callback) => {
+    if (!airGapped() || allowsAirGapURL(details.url)) {
+      callback({})
+      return
+    }
+    writeLog("window", "blocked air-gapped renderer request", { url: details.url, type: details.resourceType }, "warn")
+    callback({ cancel: true })
   })
 }
 
@@ -471,11 +491,27 @@ function wireWindowRecovery(win: BrowserWindow, name: string) {
   })
 }
 
-function addDocumentPolicy(response: Response, file: string) {
+async function addDocumentPolicy(response: Response, file: string) {
   if (!file.toLowerCase().endsWith(".html")) return response
   const headers = new Headers(response.headers)
   headers.set(documentPolicyHeader, jsCallStacksDocumentPolicy)
-  return new Response(response.body, { status: response.status, statusText: response.statusText, headers })
+  if (!airGapped())
+    return new Response(response.body, { status: response.status, statusText: response.statusText, headers })
+
+  const allowOrigins = process.env.OPENCODE_AIR_GAP_ALLOW_ORIGINS?.trim()
+  const allowOriginsMeta = allowOrigins
+    ? `<meta name="opencode-air-gap-allow-origins" content="${escapeHTMLAttribute(allowOrigins)}">`
+    : ""
+  const body = (await response.text()).replace(
+    /<head\b[^>]*>/i,
+    `$&<meta name="opencode-air-gapped" content="on">${allowOriginsMeta}`,
+  )
+  headers.delete("content-length")
+  return new Response(body, { status: response.status, statusText: response.statusText, headers })
+}
+
+function escapeHTMLAttribute(value: string) {
+  return value.replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
 }
 
 function allowRendererPermissions(win: BrowserWindow) {

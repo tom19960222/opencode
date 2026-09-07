@@ -1,0 +1,471 @@
+{
+  "releases": [
+    {
+      "tag": "v1.18.29",
+      "name": "v1.18.29",
+      "date": "2026-09-04T23:47:16Z",
+      "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.29",
+      "highlights": [],
+      "sections": [
+        {
+          "title": "Core",
+          "items": [
+            "Allow Codex OAuth model filtering to recognize integer GPT versions like `gpt-6`",
+            "Fixes issue of gpt-6-astra not showing up for openai subscription users"
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "v1.18.28",
+      "name": "v1.18.28",
+      "date": "2026-09-04T15:38:23Z",
+      "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.28",
+      "highlights": [],
+      "sections": [
+        {
+          "title": "Core",
+          "items": [
+            "Send the session ID as GitHub Copilot's interaction header to improve request tracking across a session."
+          ]
+        },
+        {
+          "title": "Desktop",
+          "items": [
+            "Use the desktop client ID during OpenCode account device authentication.",
+            "Increase the open-in app icon size for better visibility."
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "v1.18.27",
+      "name": "v1.18.27",
+      "date": "2026-09-02T21:41:01Z",
+      "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.27",
+      "highlights": [],
+      "sections": [
+        {
+          "title": "Core",
+          "items": [
+            "Default provider header timeouts to five minutes so slow model startups fail less often.",
+            "Default streamed chunk timeouts to five minutes, with `false` supported to disable them.",
+            "Let Anthropic `thinking.blockBinding` opt out via config when you need to keep the provider default. (@dkindlund)",
+            "Limit Anthropic thinking block binding to Claude 5.1+ models so older deployments do not reject requests.",
+            "Avoid unhandled errors when canceling timed-out SSE reads. (@AlexanderWillner)"
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "v1.18.26",
+      "name": "v1.18.26",
+      "date": "2026-09-01T21:52:15Z",
+      "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.26",
+      "highlights": [],
+      "sections": [
+        {
+          "title": "Core",
+          "items": [
+            "Claude 5 sessions now tolerate stale thinking blocks instead of failing after prompt or tool changes.",
+            "Bedrock GPT-5.6 models now accept `none` reasoning effort.",
+            "Bedrock reasoning and replay handling is more reliable. (@pengzh1)",
+            "Tool call timing now stays accurate when tools update their metadata while still running. (@bartlettroscoe)",
+            "`apply_patch` no longer emits an empty move path in permission metadata. (@altendky)",
+            "Azure CLI sign-in now asks for the resource name directly instead of querying Azure management APIs."
+          ]
+        },
+        {
+          "title": "Desktop",
+          "items": [
+            "Session renames now save reliably from the title editor and tab context menu."
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "v1.18.25",
+      "name": "v1.18.25",
+      "date": "2026-08-28T05:58:20Z",
+      "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.25",
+      "highlights": [],
+      "sections": [
+        {
+          "title": "Core",
+          "items": [
+            "Fixed Azure authentication so Azure CLI sign-in works without requiring Bun."
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "v1.18.24",
+      "name": "v1.18.24",
+      "date": "2026-08-28T04:10:14Z",
+      "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.24",
+      "highlights": [],
+      "sections": [
+        {
+          "title": "Core",
+          "items": [
+            "Bedrock reasoning responses no longer get cached into unreplayable empty messages.",
+            "Azure providers can now sign in with Microsoft Entra ID through the Azure CLI instead of requiring an API key.",
+            "V1 now reads supported V2 config fields so newer config files keep working in more mixed setups."
+          ]
+        },
+        {
+          "title": "Desktop",
+          "items": [
+            "Archived sessions disappear from the Home list immediately. (@NathanTCode)"
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "v1.18.23",
+      "name": "v1.18.23",
+      "date": "2026-08-25T06:30:49Z",
+      "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.23",
+      "highlights": [],
+      "sections": [
+        {
+          "title": "Core",
+          "items": [
+            "Fixed Cloudflare AI Gateway routing for third-party providers so non-Workers models work through the gateway's REST API. (@superhighfives)",
+            "Fixed Anthropic models through Cloudflare AI Gateway by converting dotted model IDs like `claude-haiku-4.5` to the dashed slug Anthropic expects. (@superhighfives)",
+            "Fixed parent session IDs being sent in request headers for session-aware providers."
+          ]
+        },
+        {
+          "title": "TUI",
+          "items": [
+            "Fixed GitHub auth for immutable OIDC subject tokens."
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "v1.18.22",
+      "name": "v1.18.22",
+      "date": "2026-08-24T14:37:19Z",
+      "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.22",
+      "highlights": [],
+      "sections": [
+        {
+          "title": "Core",
+          "items": [
+            "Removed outdated OpenCode Go first-month discount messaging and pricing.",
+            "Fixed OpenCode device login links when servers return relative verification URLs or use a base path.",
+            "Fixed `textVerbosity` being sent to OpenAI-compatible providers that do not support it. (@joelstucki-taulia)",
+            "Updated the Amazon Bedrock provider for compatibility fixes."
+          ]
+        },
+        {
+          "title": "Desktop",
+          "items": [
+            "Keep model provider headers visible while scrolling the model picker."
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "v1.18.21",
+      "name": "v1.18.21",
+      "date": "2026-08-21T14:51:11Z",
+      "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.21",
+      "highlights": [],
+      "sections": [
+        {
+          "title": "Core",
+          "items": [
+            "Continue responses when a model reports an unknown finish reason instead of stopping early",
+            "Route Vertex AI `eu` and `us` multi-region Gemini requests through REP endpoints"
+          ]
+        },
+        {
+          "title": "Desktop",
+          "items": [
+            "Keep file search results visible while the next search is loading",
+            "Register the archive session command in both desktop layouts (@NathanTCode)"
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "v1.18.20",
+      "name": "v1.18.20",
+      "date": "2026-08-21T08:09:31Z",
+      "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.20",
+      "highlights": [],
+      "sections": [
+        {
+          "title": "Core",
+          "items": [
+            "Surface failed subagent tool calls with a resumable `task_id`.",
+            "Retry provider responses that end with `finish_reason: network_error`.",
+            "Retry more network error variants, including `network-error` and `network_error`.",
+            "Surface resumable subagent failures instead of returning an empty result.",
+            "Preserve Cerebras `max_completion_tokens` without applying an extra output cap.",
+            "Answer permission requests triggered by subagents during `opencode run`.",
+            "Retry xAI capacity and temporary unavailability stream errors."
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "v1.18.19",
+      "name": "v1.18.19",
+      "date": "2026-08-20T06:22:06Z",
+      "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.19",
+      "highlights": [],
+      "sections": [
+        {
+          "title": "Core",
+          "items": [
+            "Added native OpenAI and Anthropic passthroughs for Cloudflare AI Gateway models.",
+            "Matched Codex rate limits more closely to ChatGPT subscription limits. (@GameOn223)",
+            "Removed built-in Qwen sampling defaults that could send unsupported settings.",
+            "Properly show authenticated providers in `/connect`. (@OpeOginni)",
+            "Ignore malformed model pricing instead of breaking usage cost calculation.",
+            "Fall back when OpenAI websocket requests exceed message size limits.",
+            "Forward ChatGPT workspace compute residency to Codex requests.",
+            "Updated the default Console URL used by account connection flows.",
+            "Enabled web search when using the OpenCode Go provider.",
+            "Preserved compatibility with existing v1 databases."
+          ]
+        },
+        {
+          "title": "Desktop",
+          "items": [
+            "Kept saved server details editable in the server dialog."
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "v1.18.18",
+      "name": "v1.18.18",
+      "date": "2026-08-13T01:15:04Z",
+      "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.18",
+      "highlights": [],
+      "sections": [
+        {
+          "title": "Core",
+          "items": [
+            "Select the Kimi system prompt correctly for official Moonshot and Kimi providers",
+            "Fix xhigh reasoning effort for xai models"
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "v1.18.17",
+      "name": "v1.18.17",
+      "date": "2026-08-12T20:25:07Z",
+      "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.17",
+      "highlights": [],
+      "sections": [
+        {
+          "title": "Core",
+          "items": [
+            "Made session compaction keep complete recent turns and produce clearer summaries for smaller models.",
+            "Added MERGE Gateway reasoning variants so those model options work correctly. (@MatthewFeroz)",
+            "Capped automatic session retries and added jitter to reduce repeated retry storms.",
+            "Enabled PDF attachments for GitHub Copilot models that advertise PDF vision support. (@stevenao)",
+            "Applied the correct sampling defaults to DeepSeek V4 Flash on supported providers.",
+            "Routed all Muse family models to the correct Meta system prompt. (@mreso)"
+          ]
+        },
+        {
+          "title": "Desktop",
+          "items": [
+            "Updated Chinese developer terminology to use more widely recognized translations.",
+            "Used the server's current default model instead of stale local config when choosing the default model."
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "v1.18.16",
+      "name": "v1.18.16",
+      "date": "2026-08-10T06:07:08Z",
+      "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.16",
+      "highlights": [],
+      "sections": [
+        {
+          "title": "Core",
+          "items": [
+            "Ignore unknown top-level config fields instead of failing config parsing",
+            "Register projects opened from Home so they are available to the rest of the app"
+          ]
+        },
+        {
+          "title": "Desktop",
+          "items": [
+            "Open the project menu with a right-click in Home",
+            "Fall back to listing and matching local directories when the project picker server does not support search",
+            "Use 词元 instead of 令牌 for token-related labels in Simplified Chinese (@Speechlessmanbilibili)",
+            "Keep the macOS app running after the last window closes and reopen a window when the app is activated"
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "v1.18.15",
+      "name": "v1.18.15",
+      "date": "2026-08-07T06:49:55Z",
+      "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.15",
+      "highlights": [],
+      "sections": [
+        {
+          "title": "Core",
+          "items": [
+            "Chronological message ordering now stays correct even when imported or legacy message IDs are out of order.",
+            "Revert and fork actions now use real message chronology instead of message ID ordering.",
+            "Truncation cleanup now removes stale files by file timestamp more reliably.",
+            "Repeated compaction now keeps earlier tool-call history in summaries instead of dropping orphaned results.",
+            "Blob-based attachments now load correctly in the web UI. (@rexdotsh)"
+          ]
+        },
+        {
+          "title": "Desktop",
+          "items": [
+            "Added much broader locale coverage across the desktop app.",
+            "Export full session transcripts as JSON from the UI.",
+            "Session timelines now respect chronological message boundaries more reliably.",
+            "Stored messages now stay ordered by creation time.",
+            "Session lists now sort by persisted activity time more reliably.",
+            "Language names now stay native in the locale picker.",
+            "Filled in missing translations across existing locales."
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "v1.18.14",
+      "name": "v1.18.14",
+      "date": "2026-08-05T20:58:55Z",
+      "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.14",
+      "highlights": [],
+      "sections": [
+        {
+          "title": "Core",
+          "items": [
+            "Simplified xAI login to a single device-code flow that works better in headless and remote environments.",
+            "Preserved structured mid-stream provider errors so compatible providers can retry failed responses.",
+            "Retried more transient provider and network errors instead of failing immediately.",
+            "Counted cache writes in ACP usage totals.",
+            "Logged remote workspace 5xx response bodies in the host logs to make proxy failures easier to debug. (@jamesmurdza)",
+            "Stopped sending the host `directory` path to remote workspaces so prompts resolve from the remote project root. (@jamesmurdza)",
+            "Waited for queued ACP session updates before ending a turn."
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "v1.18.13",
+      "name": "v1.18.13",
+      "date": "2026-08-04T12:12:32Z",
+      "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.13",
+      "highlights": [],
+      "sections": [
+        {
+          "title": "TUI",
+          "items": [
+            "GitHub pull request reviews now include the pull request number and URL in context."
+          ]
+        },
+        {
+          "title": "Desktop",
+          "items": [
+            "Fixed several right-to-left layout issues across tabs, drawers, resizing, and titlebar interactions.",
+            "Fixed shared right-to-left UI behavior such as directional icons and drawer placement.",
+            "Sessions without titles now fall back to generated names instead of appearing blank.",
+            "Moved markdown parsing off the main thread to keep the app more responsive while rendering messages.",
+            "Localized more desktop UI copy, including native menus, update dialogs, and help content.",
+            "Added early right-to-left layout support across the app and session views.",
+            "Added locale-aware plural rules so translated counts and summaries read correctly.",
+            "Expanded translation coverage and added more supported desktop languages."
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "v1.18.12",
+      "name": "v1.18.12",
+      "date": "2026-08-04T00:55:29Z",
+      "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.12",
+      "highlights": [],
+      "sections": [
+        {
+          "title": "Core",
+          "items": [
+            "Fixed Azure GPT-5.5+ completion requests failing when reasoning is enabled. (@frederiknsgo)"
+          ]
+        },
+        {
+          "title": "Desktop",
+          "items": [
+            "Reduced composer lag when drafts include large pasted images or attachments.",
+            "Let project search match any known recent project instead of only the first five. (@NumerousJLs)",
+            "Cleared stale assistant errors from the timeline once the same turn resumes streaming.",
+            "Skipped legacy config reads against v2 servers to avoid spurious config loading issues. (@resetsix)"
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "v1.18.11",
+      "name": "v1.18.11",
+      "date": "2026-08-01T11:44:45Z",
+      "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.11",
+      "highlights": [],
+      "sections": [
+        {
+          "title": "Core",
+          "items": [
+            "Stopped MCP SSE connections from getting stuck in reconnect loops after server error responses.",
+            "Fixed provider model configs that use interleaved reasoning fields like `reasoning_text` or custom field names."
+          ]
+        },
+        {
+          "title": "Desktop",
+          "items": [
+            "Open external links in the system browser instead of inside the app.",
+            "Fixed stale session tab state in the desktop title bar. (@OpeOginni)",
+            "Open the legacy directory picker at your home folder when no home path is loaded yet.",
+            "Prevent the file tree tab from clipping when resized smaller. (@OpeOginni)",
+            "Fixed debug gutter labels and values misaligning."
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "v1.18.10",
+      "name": "v1.18.10",
+      "date": "2026-07-30T14:43:53Z",
+      "url": "https://github.com/anomalyco/opencode/releases/tag/v1.18.10",
+      "highlights": [],
+      "sections": [
+        {
+          "title": "Core",
+          "items": [
+            "Discover available Modal models automatically. (@devennavani)"
+          ]
+        },
+        {
+          "title": "Desktop",
+          "items": [
+            "Prevent adding the same attachment more than once.",
+            "Always show the new session button.",
+            "Improve toast notifications with better stacking, dismissal, and mobile layout.",
+            "Refine tab hover, active, and overflow states.",
+            "Repair malformed saved tabs so broken tab state no longer persists across launches. (@OpeOginni)",
+            "Hide the model variant selector until model data finishes loading.",
+            "Preserve the custom agent picker for existing users."
+          ]
+        }
+      ]
+    }
+  ]
+}

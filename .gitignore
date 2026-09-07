@@ -27,6 +27,8 @@ target
 .direnv/
 
 # Local dev files
+.cache/air-gap/
+packages/opencode/assets/
 opencode-dev
 UPCOMING_CHANGELOG.md
 logs/

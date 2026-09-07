@@ -1,0 +1,28 @@
+[
+  {
+    "name": "vscode-eslint",
+    "version": "3.0.34",
+    "url": "https://open-vsx.org/api/dbaeumer/vscode-eslint/3.0.34/file/dbaeumer.vscode-eslint-3.0.34.vsix",
+    "sha256": "ca5334d46f6a39079e751ef4601bfc9f86bc3a46483e87291ec609239d161308",
+    "archive": "airgap-eslint.zip",
+    "license": "MIT"
+  },
+  {
+    "name": "jdtls",
+    "version": "redhat.java-1.56.0",
+    "url": "https://open-vsx.org/api/redhat/java/linux-x64/1.56.0/file/redhat.java-1.56.0@linux-x64.vsix",
+    "sha256": "3365249637a81705690ea7e4dc4c8533bfad36b65e754ebb1c839524e208ad41",
+    "archive": "airgap-java.zip",
+    "license": "EPL-2.0; bundled JVM notices in extension/jre/*/legal"
+  },
+  {
+    "name": "kotlin-ls",
+    "version": "fwcd-1.3.13",
+    "url": "https://github.com/fwcd/kotlin-language-server/releases/download/1.3.13/server.zip",
+    "sha256": "4fe7d71d087b307c7869036171bd9d8c6a4284cd7c25b89098b0a24eb2d9b6d2",
+    "archive": "airgap-fwcd-kotlin.zip",
+    "license": "MIT; bundled dependency licenseReport.html",
+    "licenseSource": "https://raw.githubusercontent.com/fwcd/kotlin-language-server/1.3.13/LICENSE.txt",
+    "replacementReason": "The current JetBrains Kotlin server expires and cannot provide durable offline operation. fwcd supplies the local LSP equivalent in air-gapped mode only."
+  }
+]

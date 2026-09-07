@@ -2,6 +2,7 @@ import type { Hooks, PluginInput } from "@opencode-ai/plugin"
 import { OAUTH_DUMMY_KEY } from "../auth"
 import { InstallationVersion } from "@opencode-ai/core/installation/version"
 import { OauthCallbackPage } from "@opencode-ai/core/oauth/page"
+import { localFetch } from "@opencode-ai/core/air-gap-network"
 import { createServer } from "http"
 import open from "open"
 
@@ -103,7 +104,7 @@ function buildAuthorizeUrl(account: string, role: string | undefined, state: str
 }
 
 async function exchangeCodeForToken(account: string, code: string, pkce: PkceCodes) {
-  const response = await fetch(`https://${account}.snowflakecomputing.com/oauth/token-request`, {
+  const response = await localFetch(`https://${account}.snowflakecomputing.com/oauth/token-request`, {
     method: "POST",
     headers: {
       ...authHeaders(),
@@ -134,7 +135,7 @@ async function exchangeCodeForToken(account: string, code: string, pkce: PkceCod
 }
 
 async function refreshAccessToken(account: string, refreshToken: string) {
-  const response = await fetch(`https://${account}.snowflakecomputing.com/oauth/token-request`, {
+  const response = await localFetch(`https://${account}.snowflakecomputing.com/oauth/token-request`, {
     method: "POST",
     headers: {
       ...authHeaders(),
@@ -321,7 +322,7 @@ export async function SnowflakeCortexAuthPlugin(_input: PluginInput): Promise<Ho
           apiKey: OAUTH_DUMMY_KEY,
           async fetch(requestInput: RequestInfo | URL, init?: RequestInit) {
             let currentAuth = await getAuth()
-            if (currentAuth.type !== "oauth") return fetch(requestInput, init)
+            if (currentAuth.type !== "oauth") return localFetch(requestInput, init)
             let currentOauth = currentAuth as typeof currentAuth & {
               refresh: string
               access: string
@@ -444,11 +445,11 @@ export async function SnowflakeCortexAuthPlugin(_input: PluginInput): Promise<Ho
 
             if (expiresSoon) await refresh()
 
-            const response = await fetch(requestInput, prepareRequest())
+            const response = await localFetch(requestInput, prepareRequest())
 
             if (response.status === 401) {
               await refresh()
-              return transformResponse(await fetch(requestInput, prepareRequest()))
+              return transformResponse(await localFetch(requestInput, prepareRequest()))
             }
 
             return transformResponse(response)

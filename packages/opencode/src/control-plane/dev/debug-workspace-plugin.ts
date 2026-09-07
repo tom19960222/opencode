@@ -2,6 +2,7 @@ import type { Plugin } from "@opencode-ai/plugin"
 import { rename, writeFile } from "node:fs/promises"
 import { randomInt } from "node:crypto"
 import { setTimeout as sleep } from "node:timers/promises"
+import { localFetch } from "@opencode-ai/core/air-gap-network"
 
 const DEV_DATA_FILE = "/tmp/opencode-workspace-dev-data.json"
 const DEV_DATA_TEMP_FILE = `${DEV_DATA_FILE}.tmp`
@@ -12,7 +13,7 @@ async function waitForHealth(port: number) {
 
   while (Date.now() - started < 30_000) {
     try {
-      const response = await fetch(url)
+      const response = await localFetch(url)
       if (response.ok) {
         return
       }

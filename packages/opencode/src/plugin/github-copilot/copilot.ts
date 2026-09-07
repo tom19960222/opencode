@@ -1,6 +1,7 @@
 import type { Hooks, PluginInput } from "@opencode-ai/plugin"
 import type { Model } from "@opencode-ai/sdk/v2"
 import { InstallationVersion } from "@opencode-ai/core/installation/version"
+import { localFetch } from "@opencode-ai/core/air-gap-network"
 import { iife } from "@/util/iife"
 import { setTimeout as sleep } from "node:timers/promises"
 import { CopilotModels } from "./models"
@@ -101,7 +102,7 @@ export async function CopilotAuthPlugin(input: PluginInput): Promise<Hooks> {
           apiKey: "",
           async fetch(request: RequestInfo | URL, init?: RequestInit) {
             const info = await getAuth()
-            if (info.type !== "oauth") return fetch(request, init)
+            if (info.type !== "oauth") return localFetch(request, init)
 
             const url = request instanceof URL ? request.href : typeof request === "string" ? request : request.url
             const { isVision, isAgent } = iife(() => {
@@ -172,7 +173,7 @@ export async function CopilotAuthPlugin(input: PluginInput): Promise<Hooks> {
             delete headers["x-api-key"]
             delete headers["authorization"]
 
-            return fetch(request, {
+            return localFetch(request, {
               ...init,
               headers,
             })
@@ -231,7 +232,7 @@ export async function CopilotAuthPlugin(input: PluginInput): Promise<Hooks> {
 
             const urls = getUrls(domain)
 
-            const deviceResponse = await fetch(urls.DEVICE_CODE_URL, {
+              const deviceResponse = await localFetch(urls.DEVICE_CODE_URL, {
               method: "POST",
               headers: {
                 Accept: "application/json",
@@ -261,7 +262,7 @@ export async function CopilotAuthPlugin(input: PluginInput): Promise<Hooks> {
               method: "auto" as const,
               async callback() {
                 while (true) {
-                  const response = await fetch(urls.ACCESS_TOKEN_URL, {
+                  const response = await localFetch(urls.ACCESS_TOKEN_URL, {
                     method: "POST",
                     headers: {
                       Accept: "application/json",

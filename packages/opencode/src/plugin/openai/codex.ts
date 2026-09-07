@@ -1,5 +1,6 @@
 import type { Hooks, PluginInput } from "@opencode-ai/plugin"
 import { InstallationVersion } from "@opencode-ai/core/installation/version"
+import { localFetch } from "@opencode-ai/core/air-gap-network"
 import { OAUTH_DUMMY_KEY } from "../../auth"
 import os from "os"
 import { setTimeout as sleep } from "node:timers/promises"
@@ -115,7 +116,7 @@ interface CodexAuthPluginOptions {
 }
 
 async function exchangeCodeForTokens(code: string, redirectUri: string, pkce: PkceCodes): Promise<TokenResponse> {
-  const response = await fetch(`${ISSUER}/oauth/token`, {
+  const response = await localFetch(`${ISSUER}/oauth/token`, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
@@ -133,7 +134,7 @@ async function exchangeCodeForTokens(code: string, redirectUri: string, pkce: Pk
 }
 
 async function refreshAccessToken(refreshToken: string, issuer = ISSUER): Promise<TokenResponse> {
-  const response = await fetch(`${issuer}/oauth/token`, {
+  const response = await localFetch(`${issuer}/oauth/token`, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
@@ -330,7 +331,7 @@ export async function CodexAuthPlugin(input: PluginInput, options: CodexAuthPlug
       async loader(getAuth) {
         const auth = await getAuth()
         const websocketFetch = options.experimentalWebSockets
-          ? OpenAIWebSocketPool.createWebSocketFetch({ httpFetch: fetch })
+          ? OpenAIWebSocketPool.createWebSocketFetch({ httpFetch: localFetch })
           : undefined
         if (websocketFetch) {
           websocketFetches.push(websocketFetch)
@@ -362,7 +363,7 @@ export async function CodexAuthPlugin(input: PluginInput, options: CodexAuthPlug
 
             const currentAuth = await getAuth()
             if (currentAuth.type !== "oauth")
-              return websocketFetch ? websocketFetch(requestInput, init) : fetch(requestInput, init)
+              return websocketFetch ? websocketFetch(requestInput, init) : localFetch(requestInput, init)
 
             const authWithAccount = currentAuth as typeof currentAuth & { accountId?: string }
 
@@ -432,7 +433,7 @@ export async function CodexAuthPlugin(input: PluginInput, options: CodexAuthPlug
               headers,
             }
             if (websocketFetch && parsed.pathname.endsWith("/responses")) return websocketFetch(url, requestInit)
-            return fetch(url, OpenAIWebSocketPool.withoutInternalHeaders(requestInit))
+            return localFetch(url, OpenAIWebSocketPool.withoutInternalHeaders(requestInit))
           },
         }
       },
@@ -471,7 +472,7 @@ export async function CodexAuthPlugin(input: PluginInput, options: CodexAuthPlug
           label: "ChatGPT Pro/Plus (headless)",
           type: "oauth",
           authorize: async () => {
-            const deviceResponse = await fetch(`${ISSUER}/api/accounts/deviceauth/usercode`, {
+            const deviceResponse = await localFetch(`${ISSUER}/api/accounts/deviceauth/usercode`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -495,7 +496,7 @@ export async function CodexAuthPlugin(input: PluginInput, options: CodexAuthPlug
               method: "auto" as const,
               async callback() {
                 while (true) {
-                  const response = await fetch(`${ISSUER}/api/accounts/deviceauth/token`, {
+                  const response = await localFetch(`${ISSUER}/api/accounts/deviceauth/token`, {
                     method: "POST",
                     headers: {
                       "Content-Type": "application/json",
@@ -513,7 +514,7 @@ export async function CodexAuthPlugin(input: PluginInput, options: CodexAuthPlug
                       code_verifier: string
                     }
 
-                    const tokenResponse = await fetch(`${ISSUER}/oauth/token`, {
+                    const tokenResponse = await localFetch(`${ISSUER}/oauth/token`, {
                       method: "POST",
                       headers: { "Content-Type": "application/x-www-form-urlencoded" },
                       body: new URLSearchParams({

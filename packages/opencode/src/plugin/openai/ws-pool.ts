@@ -1,4 +1,5 @@
 import WebSocket from "ws"
+import { localFetch, requireLocal } from "@opencode-ai/core/air-gap-network"
 import { ProviderError } from "@/provider/error"
 import { isRecord } from "@/util/record"
 import { OpenAIWebSocket } from "./ws"
@@ -29,7 +30,7 @@ const DEFAULT_MAX_CONNECTION_AGE = 55 * 60 * 1000
 const CONNECTION_LIMIT_REACHED_CODE = "websocket_connection_limit_reached"
 
 export function createWebSocketFetch(options?: CreateWebSocketFetchOptions) {
-  const httpFetch = options?.httpFetch ?? globalThis.fetch
+  const httpFetch = options?.httpFetch ?? localFetch
   const pool = new Map<string, PoolEntry>()
   const connectTimeout = options?.connectTimeout ?? DEFAULT_CONNECT_TIMEOUT
   const idleTimeout = options?.idleTimeout ?? DEFAULT_IDLE_TIMEOUT
@@ -42,6 +43,7 @@ export function createWebSocketFetch(options?: CreateWebSocketFetchOptions) {
 
   async function websocketFetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
     const url = input instanceof URL ? input.toString() : typeof input === "string" ? input : input.url
+    requireLocal(url)
     const internalHeaders = OpenAIWebSocket.normalizeHeaders(init?.headers)
     const httpInit = withoutInternalHeaders(init)
 

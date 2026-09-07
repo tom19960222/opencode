@@ -1,6 +1,9 @@
 export * as Npm from "./npm"
 
 import path from "path"
+import { existsSync } from "node:fs"
+import { AirGap } from "./air-gap"
+import { Flag } from "./flag/flag"
 import npa from "npm-package-arg"
 import { Effect, Schema, Context, Layer, Option, FileSystem } from "effect"
 import { NodeFileSystem } from "@effect/platform-node"
@@ -76,9 +79,22 @@ const layer = Layer.effect(
     const global = yield* Global.Service
     const fs = yield* FileSystem.FileSystem
     const flock = yield* EffectFlock.Service
-    const directory = (pkg: string) => path.join(global.cache, "packages", sanitize(pkg))
+    const directory = (pkg: string) => {
+      const bundled = path.join(AirGap.directory(), "cache", "packages", sanitize(pkg))
+      return Flag.OPENCODE_AIR_GAPPED && existsSync(bundled)
+        ? bundled
+        : path.join(global.cache, "packages", sanitize(pkg))
+    }
     const reify = (input: { dir: string; add?: string[] }) =>
       Effect.gen(function* () {
+        if (Flag.OPENCODE_AIR_GAPPED)
+          return yield* new InstallFailedError({
+            dir: input.dir,
+            add: input.add,
+            cause: new Error(
+              `Air-gapped npm package is missing. Prepackage ${input.add?.join(", ") || input.dir} under ${path.join(AirGap.directory(), "cache", "packages")}; runtime package installation is disabled.`,
+            ),
+          })
         yield* flock.acquire(`npm-install:${input.dir}`)
         const { Arborist } = yield* Effect.promise(() => import("@npmcli/arborist"))
         const add = input.add ?? []
@@ -235,6 +251,7 @@ const layer = Layer.effect(
           return Option.some(path.join(binDir, resolved.value))
         }).pipe(
           Effect.scoped,
+          Effect.tapError((error) => Effect.logWarning("npm executable unavailable", { pkg, error })),
           Effect.orElseSucceed(() => Option.none<string>()),
         ),
       )

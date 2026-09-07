@@ -5,6 +5,7 @@ import * as pty from "@lydell/node-pty"
 import type { WslDistroProbe, WslInstalledDistro, WslOnlineDistro, WslRuntimeCheck } from "../../preload/types"
 import { wslTerminalArgs } from "./policy"
 import { nativeT } from "../native-translations"
+import { airGapped } from "../air-gap"
 
 export type WslCommandLine = {
   stream: "stdout" | "stderr"
@@ -239,6 +240,7 @@ export async function listInstalledWslDistros(opts?: RunWslOptions) {
 }
 
 export async function listOnlineWslDistros(opts?: RunWslOptions) {
+  if (airGapped()) return []
   const result = await runWsl(["--list", "--online"], opts)
   if (result.code !== 0) {
     throw new Error(summarize(result.stderr || result.stdout) || nativeT("desktop.wsl.error.listOnline"))
@@ -247,6 +249,7 @@ export async function listOnlineWslDistros(opts?: RunWslOptions) {
 }
 
 export async function installWslRuntimeElevated(opts?: RunWslOptions) {
+  if (airGapped()) throw new Error(nativeT("desktop.wsl.error.installWsl"))
   const script = [
     "$ErrorActionPreference = 'Stop'",
     "$process = Start-Process -FilePath 'wsl.exe' -Verb RunAs -ArgumentList @('--install','--no-distribution') -Wait -PassThru",
@@ -256,6 +259,7 @@ export async function installWslRuntimeElevated(opts?: RunWslOptions) {
 }
 
 export async function installWslDistro(name: string, opts?: RunWslOptions) {
+  if (airGapped()) throw new Error(nativeT("desktop.wsl.error.installDistro", { distro: name }))
   return runInteractiveCommand(
     resolveSystem32Command("wsl.exe"),
     ["--install", "-d", name, "--web-download", "--no-launch"],
@@ -265,6 +269,7 @@ export async function installWslDistro(name: string, opts?: RunWslOptions) {
 }
 
 export async function installWslOpencode(version: string, distro: string, opts?: RunWslOptions) {
+  if (airGapped()) throw new Error(nativeT("desktop.wsl.error.installOpencode"))
   return runInteractiveCommand(
     resolveSystem32Command("wsl.exe"),
     wslArgs(

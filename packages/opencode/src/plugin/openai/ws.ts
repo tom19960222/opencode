@@ -3,6 +3,7 @@
 
 import WebSocket from "ws"
 import { APICallError } from "ai"
+import { requireLocal } from "@opencode-ai/core/air-gap-network"
 import { ProviderError } from "@/provider/error"
 import { errorMessage } from "@/util/error"
 import { ProxyEnv } from "@/util/proxy-env"
@@ -71,6 +72,7 @@ export function isAbortError(error: unknown): error is DOMException {
 
 export function connectResponsesWebSocket(options: ConnectResponsesWebSocketOptions) {
   return new Promise<WebSocket>((resolve, reject) => {
+    requireLocal(options.url.replace(/^ws:/, "http:").replace(/^wss:/, "https:"))
     if (options.signal?.aborted) {
       reject(abortError(options.signal))
       return

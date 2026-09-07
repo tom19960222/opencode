@@ -18,6 +18,7 @@ import type {
 } from "@octokit/webhooks-types"
 import { UI } from "../ui"
 import { ModelsDev } from "@opencode-ai/core/models-dev"
+import { localFetch } from "@opencode-ai/core/air-gap-network"
 import { InstanceRef } from "@/effect/instance-ref"
 import { SessionShare } from "@/share/session"
 import { Session } from "@/session/session"
@@ -322,7 +323,7 @@ export const githubInstall = Effect.fn("Cli.github.install")(function* () {
         s.stop("Installed GitHub app")
 
         async function getInstallation() {
-          return await fetch(`https://api.opencode.ai/get_github_app_installation?owner=${app.owner}&repo=${app.repo}`)
+          return await localFetch(`https://api.opencode.ai/get_github_app_installation?owner=${app.owner}&repo=${app.repo}`)
             .then((res) => res.json())
             .then((data) => data.installation)
         }
@@ -482,8 +483,9 @@ export const githubRun = Effect.fn("Cli.github.run")(function* (args: { event?: 
         const actionToken = isMock ? args.token! : await getOidcToken()
         appToken = await exchangeForAppToken(actionToken)
       }
-      octoRest = new Octokit({ auth: appToken })
+      octoRest = new Octokit({ auth: appToken, request: { fetch: localFetch } })
       octoGraph = graphql.defaults({
+        request: { fetch: localFetch },
         headers: { authorization: `token ${appToken}` },
       })
       githubClientReady = true
@@ -796,7 +798,7 @@ export const githubRun = Effect.fn("Cli.github.run")(function* (args: { event?: 
         const filename = path.basename(url)
 
         // Download image
-        const res = await fetch(url, {
+        const res = await localFetch(url, {
           headers: {
             Authorization: `Bearer ${appToken}`,
             Accept: "application/vnd.github.v3+json",
@@ -995,14 +997,14 @@ export const githubRun = Effect.fn("Cli.github.run")(function* (args: { event?: 
 
     async function exchangeForAppToken(token: string) {
       const response = token.startsWith("github_pat_")
-        ? await fetch(`${oidcBaseUrl}/exchange_github_app_token_with_pat`, {
+        ? await localFetch(`${oidcBaseUrl}/exchange_github_app_token_with_pat`, {
             method: "POST",
             headers: {
               Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({ owner, repo }),
           })
-        : await fetch(`${oidcBaseUrl}/exchange_github_app_token`, {
+        : await localFetch(`${oidcBaseUrl}/exchange_github_app_token`, {
             method: "POST",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -1593,7 +1595,7 @@ query($owner: String!, $repo: String!, $number: Int!) {
     async function revokeAppToken() {
       if (!appToken) return
 
-      await fetch("https://api.github.com/installation/token", {
+      await localFetch("https://api.github.com/installation/token", {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${appToken}`,

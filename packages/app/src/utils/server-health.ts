@@ -1,3 +1,4 @@
+import { airGapFetch } from "./air-gap"
 import { usePlatform } from "@/context/platform"
 import { ServerConnection } from "@/context/server"
 import { authTokenFromCredentials, createSdkForServer } from "./server"
@@ -87,7 +88,7 @@ export async function checkServerHealth(
   const attempt = async (count: number): Promise<ServerHealth> => {
     const current = await OpenCode.make({
       baseUrl: server.url,
-      fetch,
+      fetch: airGapFetch(fetch),
       headers: server.password
         ? {
             Authorization: `Basic ${authTokenFromCredentials({ username: server.username, password: server.password })}`,

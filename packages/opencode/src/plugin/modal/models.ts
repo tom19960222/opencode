@@ -1,5 +1,6 @@
 import type { Model } from "@opencode-ai/sdk/v2"
 import { Schema } from "effect"
+import { localFetch } from "@opencode-ai/core/air-gap-network"
 
 const reasoningOption = Schema.Struct({
   type: Schema.Literal("effort"),
@@ -48,7 +49,7 @@ function price(value: string | number | undefined, fallback: number) {
 }
 
 export async function get(baseURL: string, apiKey: string, existing: Record<string, Model>) {
-  const data = await fetch(`${baseURL.replace(/\/+$/, "")}/models`, {
+  const data = await localFetch(`${baseURL.replace(/\/+$/, "")}/models`, {
     headers: {
       Authorization: `Bearer ${apiKey}`,
     },

@@ -6,6 +6,8 @@ import { Cause, Context, Effect, Layer, Schema, Scope } from "effect"
 import { ModelV2 } from "./model"
 import { ProviderV2 } from "./provider"
 import { State } from "./state"
+import { requireLocal } from "./air-gap-network"
+import { Flag } from "./flag/flag"
 
 type SDK = any
 
@@ -83,6 +85,7 @@ function prepareOptions(model: ModelV2.Info, pkg: string) {
   const chunkTimeout = options.chunkTimeout
   delete options.chunkTimeout
   options.fetch = async (input: Parameters<typeof fetch>[0], init?: RequestInit) => {
+    requireLocal(input)
     const opts = { ...(init ?? {}) }
     const signals = [
       opts.signal,
@@ -113,6 +116,7 @@ function prepareOptions(model: ModelV2.Info, pkg: string) {
     const res = await (typeof customFetch === "function" ? customFetch : fetch)(input, {
       ...opts,
       timeout: false,
+      ...(Flag.OPENCODE_AIR_GAPPED ? { redirect: "error" as const } : {}),
     })
     if (!chunkAbortCtl || typeof chunkTimeout !== "number") return res
     return wrapSSE(res, chunkTimeout, chunkAbortCtl)

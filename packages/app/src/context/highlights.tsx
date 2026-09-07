@@ -1,3 +1,5 @@
+import { airGapped } from "@/utils/air-gap"
+import changelog from "@/assets/air-gap-changelog.json"
 import { createEffect, onCleanup } from "solid-js"
 import { createStore } from "solid-js/store"
 import { createSimpleContext } from "@opencode-ai/ui/context"
@@ -177,11 +179,13 @@ export const { use: useHighlights, provider: HighlightsProvider } = createSimple
         clearTimer()
       })
 
-      fetcher(CHANGELOG_URL, {
-        signal: controller.signal,
-        headers: { Accept: "application/json" },
-      })
-        .then((response) => (response.ok ? (response.json() as Promise<unknown>) : undefined))
+      const notes = airGapped()
+        ? Promise.resolve(changelog)
+        : fetcher(CHANGELOG_URL, {
+            signal: controller.signal,
+            headers: { Accept: "application/json" },
+          }).then((response) => (response.ok ? (response.json() as Promise<unknown>) : undefined))
+      notes
         .then((json) => {
           if (!json) return
           const highlights = loadReleaseHighlights(json, platform.version, previous)

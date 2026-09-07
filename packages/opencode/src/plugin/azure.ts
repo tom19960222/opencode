@@ -1,4 +1,5 @@
 import { InstallationVersion } from "@opencode-ai/core/installation/version"
+import { localFetch } from "@opencode-ai/core/air-gap-network"
 import { which } from "@opencode-ai/core/util/which"
 import type { Hooks } from "@opencode-ai/plugin"
 import { Schema } from "effect"
@@ -19,7 +20,7 @@ type AzureCommand = (args: string[]) => Promise<unknown>
 
 export async function AzureAuthPlugin(): Promise<Hooks> {
   const available = Boolean(which("az"))
-  return createAzureAuthHooks(runAzure, fetch, available)
+  return createAzureAuthHooks(runAzure, localFetch, available)
 }
 
 export function createAzureAuthHooks(

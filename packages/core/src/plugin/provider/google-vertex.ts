@@ -1,6 +1,7 @@
 import { Effect } from "effect"
 import { define } from "../internal"
 import { ProviderV2 } from "../../provider"
+import { localFetch, requireLocal } from "../../air-gap-network"
 
 function resolveProject(options: Record<string, any>) {
   // models.dev advertises GOOGLE_VERTEX_PROJECT for Vertex, while Google SDKs
@@ -42,6 +43,7 @@ function authFetch(fetchWithRuntimeOptions?: unknown) {
   // Native Vertex SDKs handle ADC internally. OpenAI-compatible Vertex endpoints
   // do not, so inject a Google access token into their fetch path.
   return async (input: Parameters<typeof fetch>[0], init?: RequestInit) => {
+    requireLocal(input)
     const { GoogleAuth } = await import("google-auth-library")
     const auth = new GoogleAuth({ scopes: ["https://www.googleapis.com/auth/cloud-platform"] })
     const client = await auth.getClient()
@@ -50,7 +52,7 @@ function authFetch(fetchWithRuntimeOptions?: unknown) {
     headers.set("Authorization", `Bearer ${token.token}`)
     return typeof fetchWithRuntimeOptions === "function"
       ? fetchWithRuntimeOptions(input, { ...init, headers })
-      : fetch(input, { ...init, headers })
+      : localFetch(input, { ...init, headers })
   }
 }
 

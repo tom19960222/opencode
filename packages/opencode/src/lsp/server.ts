@@ -1,3 +1,5 @@
+import { AirGap } from "@opencode-ai/core/air-gap"
+import { Flag } from "@opencode-ai/core/flag/flag"
 import type { ChildProcessWithoutNullStreams } from "child_process"
 import path from "path"
 import os from "os"
@@ -149,7 +151,7 @@ export const Vue: Info = {
     let binary = which("vue-language-server")
     const args: string[] = []
     if (!binary) {
-      if (flags.disableLspDownload) return
+      if (flags.disableLspDownload && !Flag.OPENCODE_AIR_GAPPED) return
       const resolved = await Npm.which("@vue/language-server")
       if (!resolved) return
       binary = resolved
@@ -177,16 +179,20 @@ export const ESLint: Info = {
   async spawn(root, ctx, flags) {
     const eslint = Module.resolve("eslint", ctx.directory)
     if (!eslint) return
-    const serverPath = path.join(Global.Path.bin, "vscode-eslint", "server", "out", "eslintServer.js")
+    const serverPath = path.join(binaryDirectory(), "vscode-eslint", "server", "out", "eslintServer.js")
     if (!(await Filesystem.exists(serverPath))) {
+      if (Flag.OPENCODE_AIR_GAPPED)
+        throw new Error(
+          "Air-gapped LSP is missing. Prepackage the language server in the asset bin directory or configure a local LSP command.",
+        )
       if (flags.disableLspDownload) return
       const response = await fetch("https://github.com/microsoft/vscode-eslint/archive/refs/heads/main.zip")
       if (!response.ok) return
 
-      const zipPath = path.join(Global.Path.bin, "vscode-eslint.zip")
+      const zipPath = path.join(binaryDirectory(), "vscode-eslint.zip")
       if (response.body) await Filesystem.writeStream(zipPath, response.body)
 
-      const ok = await Archive.extractZip(zipPath, Global.Path.bin)
+      const ok = await Archive.extractZip(zipPath, binaryDirectory())
         .then(() => true)
         .catch((error) => {
           return false
@@ -194,8 +200,8 @@ export const ESLint: Info = {
       if (!ok) return
       await fs.rm(zipPath, { force: true })
 
-      const extractedPath = path.join(Global.Path.bin, "vscode-eslint-main")
-      const finalPath = path.join(Global.Path.bin, "vscode-eslint")
+      const extractedPath = path.join(binaryDirectory(), "vscode-eslint-main")
+      const finalPath = path.join(binaryDirectory(), "vscode-eslint")
 
       const stats = await fs.stat(finalPath).catch(() => undefined)
       if (stats) {
@@ -337,7 +343,7 @@ export const Biome: Info = {
     if (!bin) {
       const resolved = Module.resolve("biome", root)
       if (!resolved) return
-      bin = await Npm.which("biome")
+      bin = await Npm.which("@biomejs/biome")
       if (!bin) return
       args = ["lsp-proxy", "--stdio"]
     }
@@ -367,10 +373,14 @@ export const Gopls: Info = {
     let bin = which("gopls")
     if (!bin) {
       if (!which("go")) return
+      if (Flag.OPENCODE_AIR_GAPPED)
+        throw new Error(
+          "Air-gapped LSP is missing. Prepackage the language server in the asset bin directory or configure a local LSP command.",
+        )
       if (flags.disableLspDownload) return
 
       const proc = Process.spawn(["go", "install", "golang.org/x/tools/gopls@latest"], {
-        env: { ...process.env, GOBIN: Global.Path.bin },
+        env: { ...process.env, GOBIN: binaryDirectory() },
         stdout: "pipe",
         stderr: "pipe",
         stdin: "pipe",
@@ -379,7 +389,7 @@ export const Gopls: Info = {
       if (exit !== 0) {
         return
       }
-      bin = path.join(Global.Path.bin, "gopls" + (process.platform === "win32" ? ".exe" : ""))
+      bin = path.join(binaryDirectory(), "gopls" + (process.platform === "win32" ? ".exe" : ""))
     }
     return {
       process: spawn(bin!, {
@@ -401,8 +411,12 @@ export const Rubocop: Info = {
       if (!ruby || !gem) {
         return
       }
+      if (Flag.OPENCODE_AIR_GAPPED)
+        throw new Error(
+          "Air-gapped LSP is missing. Prepackage the language server in the asset bin directory or configure a local LSP command.",
+        )
       if (flags.disableLspDownload) return
-      const proc = Process.spawn(["gem", "install", "rubocop", "--bindir", Global.Path.bin], {
+      const proc = Process.spawn(["gem", "install", "rubocop", "--bindir", binaryDirectory()], {
         stdout: "pipe",
         stderr: "pipe",
         stdin: "pipe",
@@ -411,7 +425,7 @@ export const Rubocop: Info = {
       if (exit !== 0) {
         return
       }
-      bin = path.join(Global.Path.bin, "rubocop" + (process.platform === "win32" ? ".exe" : ""))
+      bin = path.join(binaryDirectory(), "rubocop" + (process.platform === "win32" ? ".exe" : ""))
     }
     return {
       process: spawn(bin!, ["--lsp"], {
@@ -490,7 +504,7 @@ export const Pyright: Info = {
     let binary = which("pyright-langserver")
     const args = []
     if (!binary) {
-      if (flags.disableLspDownload) return
+      if (flags.disableLspDownload && !Flag.OPENCODE_AIR_GAPPED) return
       const resolved = await Npm.which("pyright", "pyright-langserver")
       if (!resolved) return
       binary = resolved
@@ -533,9 +547,9 @@ export const ElixirLS: Info = {
   async spawn(root, _ctx, flags) {
     let binary = which("elixir-ls")
     if (!binary) {
-      const elixirLsPath = path.join(Global.Path.bin, "elixir-ls")
+      const elixirLsPath = path.join(binaryDirectory(), "elixir-ls")
       binary = path.join(
-        Global.Path.bin,
+        binaryDirectory(),
         "elixir-ls-master",
         "release",
         process.platform === "win32" ? "language_server.bat" : "language_server.sh",
@@ -547,14 +561,18 @@ export const ElixirLS: Info = {
           return
         }
 
+        if (Flag.OPENCODE_AIR_GAPPED)
+          throw new Error(
+            "Air-gapped LSP is missing. Prepackage the language server in the asset bin directory or configure a local LSP command.",
+          )
         if (flags.disableLspDownload) return
 
         const response = await fetch("https://github.com/elixir-lsp/elixir-ls/archive/refs/heads/master.zip")
         if (!response.ok) return
-        const zipPath = path.join(Global.Path.bin, "elixir-ls.zip")
+        const zipPath = path.join(binaryDirectory(), "elixir-ls.zip")
         if (response.body) await Filesystem.writeStream(zipPath, response.body)
 
-        const ok = await Archive.extractZip(zipPath, Global.Path.bin)
+        const ok = await Archive.extractZip(zipPath, binaryDirectory())
           .then(() => true)
           .catch((error) => {
             return false
@@ -566,7 +584,7 @@ export const ElixirLS: Info = {
           recursive: true,
         })
 
-        const cwd = path.join(Global.Path.bin, "elixir-ls-master")
+        const cwd = path.join(binaryDirectory(), "elixir-ls-master")
         const env = { MIX_ENV: "prod", ...process.env }
         await Process.run(["mix", "deps.get"], { cwd, env })
         await Process.run(["mix", "compile"], { cwd, env })
@@ -595,6 +613,10 @@ export const Zls: Info = {
         return
       }
 
+      if (Flag.OPENCODE_AIR_GAPPED)
+        throw new Error(
+          "Air-gapped LSP is missing. Prepackage the language server in the asset bin directory or configure a local LSP command.",
+        )
       if (flags.disableLspDownload) return
 
       const releaseResponse = await fetch("https://api.github.com/repos/zigtools/zls/releases/latest")
@@ -649,23 +671,23 @@ export const Zls: Info = {
         return
       }
 
-      const tempPath = path.join(Global.Path.bin, assetName)
+      const tempPath = path.join(binaryDirectory(), assetName)
       if (downloadResponse.body) await Filesystem.writeStream(tempPath, downloadResponse.body)
 
       if (ext === "zip") {
-        const ok = await Archive.extractZip(tempPath, Global.Path.bin)
+        const ok = await Archive.extractZip(tempPath, binaryDirectory())
           .then(() => true)
           .catch((error) => {
             return false
           })
         if (!ok) return
       } else {
-        await run(["tar", "-xf", tempPath], { cwd: Global.Path.bin })
+        await run(["tar", "-xf", tempPath], { cwd: binaryDirectory() })
       }
 
       await fs.rm(tempPath, { force: true })
 
-      bin = path.join(Global.Path.bin, "zls" + (platform === "win32" ? ".exe" : ""))
+      bin = path.join(binaryDirectory(), "zls" + (platform === "win32" ? ".exe" : ""))
 
       if (!(await Filesystem.exists(bin))) {
         return
@@ -752,6 +774,10 @@ async function installRoslynLanguageServer(disableLspDownload: boolean) {
     return
   }
 
+  if (Flag.OPENCODE_AIR_GAPPED)
+    throw new Error(
+      "Air-gapped Roslyn server is missing. Prepackage roslyn-language-server in the asset bin directory.",
+    )
   if (disableLspDownload) return
   const proc = Process.spawn(["dotnet", "tool", "install", "--global", "roslyn-language-server", "--prerelease"], {
     stdout: "pipe",
@@ -831,8 +857,12 @@ export const FSharp: Info = {
         return
       }
 
+      if (Flag.OPENCODE_AIR_GAPPED)
+        throw new Error(
+          "Air-gapped LSP is missing. Prepackage the language server in the asset bin directory or configure a local LSP command.",
+        )
       if (flags.disableLspDownload) return
-      const proc = Process.spawn(["dotnet", "tool", "install", "fsautocomplete", "--tool-path", Global.Path.bin], {
+      const proc = Process.spawn(["dotnet", "tool", "install", "fsautocomplete", "--tool-path", binaryDirectory()], {
         stdout: "pipe",
         stderr: "pipe",
         stdin: "pipe",
@@ -842,7 +872,7 @@ export const FSharp: Info = {
         return
       }
 
-      bin = path.join(Global.Path.bin, "fsautocomplete" + (process.platform === "win32" ? ".exe" : ""))
+      bin = path.join(binaryDirectory(), "fsautocomplete" + (process.platform === "win32" ? ".exe" : ""))
     }
 
     return {
@@ -948,7 +978,7 @@ export const Clangd: Info = {
     }
 
     const ext = process.platform === "win32" ? ".exe" : ""
-    const direct = path.join(Global.Path.bin, "clangd" + ext)
+    const direct = path.join(binaryDirectory(), "clangd" + ext)
     if (await Filesystem.exists(direct)) {
       return {
         process: spawn(direct, args, {
@@ -957,11 +987,11 @@ export const Clangd: Info = {
       }
     }
 
-    const entries = await fs.readdir(Global.Path.bin, { withFileTypes: true }).catch(() => [])
+    const entries = await fs.readdir(binaryDirectory(), { withFileTypes: true }).catch(() => [])
     for (const entry of entries) {
       if (!entry.isDirectory()) continue
       if (!entry.name.startsWith("clangd_")) continue
-      const candidate = path.join(Global.Path.bin, entry.name, "bin", "clangd" + ext)
+      const candidate = path.join(binaryDirectory(), entry.name, "bin", "clangd" + ext)
       if (await Filesystem.exists(candidate)) {
         return {
           process: spawn(candidate, args, {
@@ -971,6 +1001,10 @@ export const Clangd: Info = {
       }
     }
 
+    if (Flag.OPENCODE_AIR_GAPPED)
+      throw new Error(
+        "Air-gapped LSP is missing. Prepackage the language server in the asset bin directory or configure a local LSP command.",
+      )
     if (flags.disableLspDownload) return
 
     const releaseResponse = await fetch("https://api.github.com/repos/clangd/clangd/releases/latest")
@@ -1020,7 +1054,7 @@ export const Clangd: Info = {
       return
     }
 
-    const archive = path.join(Global.Path.bin, name)
+    const archive = path.join(binaryDirectory(), name)
     const buf = await downloadResponse.arrayBuffer()
     if (buf.byteLength === 0) {
       return
@@ -1034,7 +1068,7 @@ export const Clangd: Info = {
     }
 
     if (zip) {
-      const ok = await Archive.extractZip(archive, Global.Path.bin)
+      const ok = await Archive.extractZip(archive, binaryDirectory())
         .then(() => true)
         .catch((error) => {
           return false
@@ -1042,11 +1076,11 @@ export const Clangd: Info = {
       if (!ok) return
     }
     if (tar) {
-      await run(["tar", "-xf", archive], { cwd: Global.Path.bin })
+      await run(["tar", "-xf", archive], { cwd: binaryDirectory() })
     }
     await fs.rm(archive, { force: true })
 
-    const bin = path.join(Global.Path.bin, "clangd_" + tag, "bin", "clangd" + ext)
+    const bin = path.join(binaryDirectory(), "clangd_" + tag, "bin", "clangd" + ext)
     if (!(await Filesystem.exists(bin))) {
       return
     }
@@ -1055,8 +1089,8 @@ export const Clangd: Info = {
       await fs.chmod(bin, 0o755).catch(() => {})
     }
 
-    await fs.unlink(path.join(Global.Path.bin, "clangd")).catch(() => {})
-    await fs.symlink(bin, path.join(Global.Path.bin, "clangd")).catch(() => {})
+    await fs.unlink(path.join(binaryDirectory(), "clangd")).catch(() => {})
+    await fs.symlink(bin, path.join(binaryDirectory(), "clangd")).catch(() => {})
 
     return {
       process: spawn(bin, args, {
@@ -1074,7 +1108,7 @@ export const Svelte: Info = {
     let binary = which("svelteserver")
     const args: string[] = []
     if (!binary) {
-      if (flags.disableLspDownload) return
+      if (flags.disableLspDownload && !Flag.OPENCODE_AIR_GAPPED) return
       const resolved = await Npm.which("svelte-language-server")
       if (!resolved) return
       binary = resolved
@@ -1107,7 +1141,7 @@ export const Astro: Info = {
     let binary = which("astro-ls")
     const args: string[] = []
     if (!binary) {
-      if (flags.disableLspDownload) return
+      if (flags.disableLspDownload && !Flag.OPENCODE_AIR_GAPPED) return
       const resolved = await Npm.which("@astrojs/language-server")
       if (!resolved) return
       binary = resolved
@@ -1197,10 +1231,14 @@ export const JDTLS: Info = {
     if (javaMajorVersion == null || javaMajorVersion < 21) {
       return
     }
-    const distPath = path.join(Global.Path.bin, "jdtls")
+    const distPath = path.join(binaryDirectory(), "jdtls")
     const launcherDir = path.join(distPath, "plugins")
     const installed = await pathExists(launcherDir)
     if (!installed) {
+      if (Flag.OPENCODE_AIR_GAPPED)
+        throw new Error(
+          "Air-gapped LSP is missing. Prepackage the language server in the asset bin directory or configure a local LSP command.",
+        )
       if (flags.disableLspDownload) return
       await fs.mkdir(distPath, { recursive: true })
       const releaseURL =
@@ -1244,6 +1282,10 @@ export const JDTLS: Info = {
       })(),
     )
     const dataDir = await fs.mkdtemp(path.join(os.tmpdir(), "opencode-jdtls-data"))
+    // Equinox expands native launcher libraries and writes state in its config
+    // directory; the packaged assets may be installed read-only.
+    const configuration = Flag.OPENCODE_AIR_GAPPED ? path.join(dataDir, "config") : configFile
+    if (Flag.OPENCODE_AIR_GAPPED) await fs.cp(configFile, configuration, { recursive: true })
     return {
       process: spawn(
         java,
@@ -1251,7 +1293,7 @@ export const JDTLS: Info = {
           "-jar",
           launcherJar,
           "-configuration",
-          configFile,
+          configuration,
           "-data",
           dataDir,
           "-Declipse.application=org.eclipse.jdt.ls.core.id1",
@@ -1287,11 +1329,22 @@ export const KotlinLS: Info = {
     return NearestRoot(["pom.xml"])(file, ctx)
   },
   async spawn(root, _ctx, flags) {
-    const distPath = path.join(Global.Path.bin, "kotlin-ls")
+    // The vendor's current server expires. The offline distribution uses the
+    // non-expiring fwcd Kotlin LSP with its bundled JVM instead.
+    if (Flag.OPENCODE_AIR_GAPPED) {
+      const binary = which("kotlin-language-server")
+      if (!binary) throw new Error("Prepackage kotlin-language-server for air-gapped Kotlin support")
+      return { process: spawn(binary, [], { cwd: root }) }
+    }
+    const distPath = path.join(binaryDirectory(), "kotlin-ls")
     const launcherScript =
       process.platform === "win32" ? path.join(distPath, "kotlin-lsp.cmd") : path.join(distPath, "kotlin-lsp.sh")
     const installed = await Filesystem.exists(launcherScript)
     if (!installed) {
+      if (Flag.OPENCODE_AIR_GAPPED)
+        throw new Error(
+          "Air-gapped LSP is missing. Prepackage the language server in the asset bin directory or configure a local LSP command.",
+        )
       if (flags.disableLspDownload) return
 
       const releaseResponse = await fetch("https://api.github.com/repos/Kotlin/kotlin-lsp/releases/latest")
@@ -1366,7 +1419,7 @@ export const YamlLS: Info = {
     let binary = which("yaml-language-server")
     const args: string[] = []
     if (!binary) {
-      if (flags.disableLspDownload) return
+      if (flags.disableLspDownload && !Flag.OPENCODE_AIR_GAPPED) return
       const resolved = await Npm.which("yaml-language-server")
       if (!resolved) return
       binary = resolved
@@ -1400,6 +1453,10 @@ export const LuaLS: Info = {
     let bin = which("lua-language-server")
 
     if (!bin) {
+      if (Flag.OPENCODE_AIR_GAPPED)
+        throw new Error(
+          "Air-gapped LSP is missing. Prepackage the language server in the asset bin directory or configure a local LSP command.",
+        )
       if (flags.disableLspDownload) return
 
       const releaseResponse = await fetch("https://api.github.com/repos/LuaLS/lua-language-server/releases/latest")
@@ -1452,13 +1509,13 @@ export const LuaLS: Info = {
         return
       }
 
-      const tempPath = path.join(Global.Path.bin, assetName)
+      const tempPath = path.join(binaryDirectory(), assetName)
       if (downloadResponse.body) await Filesystem.writeStream(tempPath, downloadResponse.body)
 
       // Unlike zls which is a single self-contained binary,
       // lua-language-server needs supporting files (meta/, locale/, etc.)
       // Extract entire archive to dedicated directory to preserve all files
-      const installDir = path.join(Global.Path.bin, `lua-language-server-${lualsArch}-${lualsPlatform}`)
+      const installDir = path.join(binaryDirectory(), `lua-language-server-${lualsArch}-${lualsPlatform}`)
 
       // Remove old installation if exists
       const stats = await fs.stat(installDir).catch(() => undefined)
@@ -1520,7 +1577,7 @@ export const PHPIntelephense: Info = {
     let binary = which("intelephense")
     const args: string[] = []
     if (!binary) {
-      if (flags.disableLspDownload) return
+      if (flags.disableLspDownload && !Flag.OPENCODE_AIR_GAPPED) return
       const resolved = await Npm.which("intelephense")
       if (!resolved) return
       binary = resolved
@@ -1601,7 +1658,7 @@ export const BashLS: Info = {
     let binary = which("bash-language-server")
     const args: string[] = []
     if (!binary) {
-      if (flags.disableLspDownload) return
+      if (flags.disableLspDownload && !Flag.OPENCODE_AIR_GAPPED) return
       const resolved = await Npm.which("bash-language-server")
       if (!resolved) return
       binary = resolved
@@ -1627,6 +1684,10 @@ export const TerraformLS: Info = {
     let bin = which("terraform-ls")
 
     if (!bin) {
+      if (Flag.OPENCODE_AIR_GAPPED)
+        throw new Error(
+          "Air-gapped LSP is missing. Prepackage the language server in the asset bin directory or configure a local LSP command.",
+        )
       if (flags.disableLspDownload) return
 
       const releaseResponse = await fetch("https://api.releases.hashicorp.com/v1/releases/terraform-ls/latest")
@@ -1656,10 +1717,10 @@ export const TerraformLS: Info = {
         return
       }
 
-      const tempPath = path.join(Global.Path.bin, "terraform-ls.zip")
+      const tempPath = path.join(binaryDirectory(), "terraform-ls.zip")
       if (downloadResponse.body) await Filesystem.writeStream(tempPath, downloadResponse.body)
 
-      const ok = await Archive.extractZip(tempPath, Global.Path.bin)
+      const ok = await Archive.extractZip(tempPath, binaryDirectory())
         .then(() => true)
         .catch((error) => {
           return false
@@ -1667,7 +1728,7 @@ export const TerraformLS: Info = {
       if (!ok) return
       await fs.rm(tempPath, { force: true })
 
-      bin = path.join(Global.Path.bin, "terraform-ls" + (platform === "win32" ? ".exe" : ""))
+      bin = path.join(binaryDirectory(), "terraform-ls" + (platform === "win32" ? ".exe" : ""))
 
       if (!(await Filesystem.exists(bin))) {
         return
@@ -1700,6 +1761,10 @@ export const TexLab: Info = {
     let bin = which("texlab")
 
     if (!bin) {
+      if (Flag.OPENCODE_AIR_GAPPED)
+        throw new Error(
+          "Air-gapped LSP is missing. Prepackage the language server in the asset bin directory or configure a local LSP command.",
+        )
       if (flags.disableLspDownload) return
 
       const response = await fetch("https://api.github.com/repos/latex-lsp/texlab/releases/latest")
@@ -1735,11 +1800,11 @@ export const TexLab: Info = {
         return
       }
 
-      const tempPath = path.join(Global.Path.bin, assetName)
+      const tempPath = path.join(binaryDirectory(), assetName)
       if (downloadResponse.body) await Filesystem.writeStream(tempPath, downloadResponse.body)
 
       if (ext === "zip") {
-        const ok = await Archive.extractZip(tempPath, Global.Path.bin)
+        const ok = await Archive.extractZip(tempPath, binaryDirectory())
           .then(() => true)
           .catch((error) => {
             return false
@@ -1747,12 +1812,12 @@ export const TexLab: Info = {
         if (!ok) return
       }
       if (ext === "tar.gz") {
-        await run(["tar", "-xzf", tempPath], { cwd: Global.Path.bin })
+        await run(["tar", "-xzf", tempPath], { cwd: binaryDirectory() })
       }
 
       await fs.rm(tempPath, { force: true })
 
-      bin = path.join(Global.Path.bin, "texlab" + (platform === "win32" ? ".exe" : ""))
+      bin = path.join(binaryDirectory(), "texlab" + (platform === "win32" ? ".exe" : ""))
 
       if (!(await Filesystem.exists(bin))) {
         return
@@ -1779,7 +1844,7 @@ export const DockerfileLS: Info = {
     let binary = which("docker-langserver")
     const args: string[] = []
     if (!binary) {
-      if (flags.disableLspDownload) return
+      if (flags.disableLspDownload && !Flag.OPENCODE_AIR_GAPPED) return
       const resolved = await Npm.which("dockerfile-language-server-nodejs")
       if (!resolved) return
       binary = resolved
@@ -1872,6 +1937,10 @@ export const Tinymist: Info = {
     let bin = which("tinymist")
 
     if (!bin) {
+      if (Flag.OPENCODE_AIR_GAPPED)
+        throw new Error(
+          "Air-gapped LSP is missing. Prepackage the language server in the asset bin directory or configure a local LSP command.",
+        )
       if (flags.disableLspDownload) return
 
       const response = await fetch("https://api.github.com/repos/Myriad-Dreamin/tinymist/releases/latest")
@@ -1915,23 +1984,23 @@ export const Tinymist: Info = {
         return
       }
 
-      const tempPath = path.join(Global.Path.bin, assetName)
+      const tempPath = path.join(binaryDirectory(), assetName)
       if (downloadResponse.body) await Filesystem.writeStream(tempPath, downloadResponse.body)
 
       if (ext === "zip") {
-        const ok = await Archive.extractZip(tempPath, Global.Path.bin)
+        const ok = await Archive.extractZip(tempPath, binaryDirectory())
           .then(() => true)
           .catch((error) => {
             return false
           })
         if (!ok) return
       } else {
-        await run(["tar", "-xzf", tempPath, "--strip-components=1"], { cwd: Global.Path.bin })
+        await run(["tar", "-xzf", tempPath, "--strip-components=1"], { cwd: binaryDirectory() })
       }
 
       await fs.rm(tempPath, { force: true })
 
-      bin = path.join(Global.Path.bin, "tinymist" + (platform === "win32" ? ".exe" : ""))
+      bin = path.join(binaryDirectory(), "tinymist" + (platform === "win32" ? ".exe" : ""))
 
       if (!(await Filesystem.exists(bin))) {
         return
@@ -1980,4 +2049,8 @@ export const JuliaLS: Info = {
       }),
     }
   },
+}
+
+function binaryDirectory() {
+  return Flag.OPENCODE_AIR_GAPPED ? path.join(AirGap.directory(), "bin") : Global.Path.bin
 }

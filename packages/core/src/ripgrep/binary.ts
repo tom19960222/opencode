@@ -1,4 +1,6 @@
 import path from "path"
+import { AirGap } from "../air-gap"
+import { Flag } from "../flag/flag"
 import { Context, Effect, Layer, Stream } from "effect"
 import { FetchHttpClient, HttpClient, HttpClientRequest } from "effect/unstable/http"
 import { ChildProcess } from "effect/unstable/process"
@@ -96,6 +98,11 @@ export namespace RipgrepBinary {
 
             const target = path.join(Global.Path.bin, `rg${process.platform === "win32" ? ".exe" : ""}`)
             if (yield* fs.isFile(target).pipe(Effect.orDie)) return target
+
+            if (Flag.OPENCODE_AIR_GAPPED)
+              return yield* Effect.fail(
+                new Error(`Air-gapped ripgrep is missing. Prepackage rg in ${path.join(AirGap.directory(), "bin")}.`),
+              )
 
             const platformKey = `${process.arch}-${process.platform}` as keyof typeof PLATFORM
             const config = PLATFORM[platformKey]

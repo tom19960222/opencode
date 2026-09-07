@@ -1,3 +1,5 @@
+import { AirGap } from "@opencode-ai/core/air-gap"
+import { Flag } from "@opencode-ai/core/flag/flag"
 import { LayerNode } from "@opencode-ai/core/effect/layer-node"
 import { httpClient, path } from "@opencode-ai/core/effect/app-node-platform"
 import { NodePath } from "@effect/platform-node"
@@ -36,6 +38,11 @@ const layer: Layer.Layer<Service, never, FSUtil.Service | Path.Path | HttpClient
 
     const download = Effect.fn("Discovery.download")(function* (url: string, dest: string) {
       if (yield* fs.exists(dest).pipe(Effect.orDie)) return true
+      if (Flag.OPENCODE_AIR_GAPPED) {
+        const bytes = yield* Effect.promise(() => AirGap.read(url))
+        yield* fs.writeWithDirs(dest, bytes).pipe(Effect.orDie)
+        return true
+      }
 
       return yield* HttpClientRequest.get(url).pipe(
         http.execute,
@@ -53,14 +60,19 @@ const layer: Layer.Layer<Service, never, FSUtil.Service | Path.Path | HttpClient
 
       yield* Effect.logInfo("fetching index", { url: index })
 
-      const data = yield* HttpClientRequest.get(index).pipe(
-        HttpClientRequest.acceptJson,
-        http.execute,
-        Effect.flatMap(HttpClientResponse.schemaBodyJson(Index)),
-        Effect.catch((err) =>
-          Effect.logError("failed to fetch index", { url: index, error: err }).pipe(Effect.as(null)),
-        ),
-      )
+      const data = Flag.OPENCODE_AIR_GAPPED
+        ? yield* Effect.promise(() => AirGap.read(index)).pipe(
+            Effect.flatMap((bytes) => Schema.decodeEffect(Schema.fromJsonString(Index))(bytes.toString("utf8"))),
+            Effect.orDie,
+          )
+        : yield* HttpClientRequest.get(index).pipe(
+            HttpClientRequest.acceptJson,
+            http.execute,
+            Effect.flatMap(HttpClientResponse.schemaBodyJson(Index)),
+            Effect.catch((err) =>
+              Effect.logError("failed to fetch index", { url: index, error: err }).pipe(Effect.as(null)),
+            ),
+          )
 
       if (!data) return []
 

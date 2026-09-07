@@ -34,6 +34,7 @@ import { CrossSpawnSpawner } from "@opencode-ai/core/cross-spawn-spawner"
 import { McpCatalog } from "./catalog"
 import { McpEvent } from "@opencode-ai/schema/mcp-event"
 import { McpBrowser } from "./browser"
+import { localFetch } from "@opencode-ai/core/air-gap-network"
 
 const DEFAULT_TIMEOUT = 30_000
 const CLIENT_OPTIONS = {
@@ -271,6 +272,7 @@ const layer = Layer.effect(
           name: "StreamableHTTP",
           transport: new StreamableHTTPClientTransport(url, {
             authProvider,
+            fetch: localFetch,
             requestInit: mcp.headers ? { headers: mcp.headers } : undefined,
           }),
         },
@@ -278,6 +280,7 @@ const layer = Layer.effect(
           name: "SSE",
           transport: new SSEClientTransport(url, {
             authProvider,
+            fetch: localFetch,
             requestInit: mcp.headers ? { headers: mcp.headers } : undefined,
           }),
         },
@@ -845,6 +848,7 @@ const layer = Layer.effect(
 
       const transport = new StreamableHTTPClientTransport(url, {
         authProvider,
+        fetch: localFetch,
         requestInit: mcpConfig.headers ? { headers: mcpConfig.headers } : undefined,
       })
       const directory = yield* InstanceState.directory

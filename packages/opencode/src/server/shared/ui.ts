@@ -1,4 +1,5 @@
 import { FSUtil } from "@opencode-ai/core/fs-util"
+import { Flag } from "@opencode-ai/core/flag/flag"
 import { Effect, Stream } from "effect"
 import { HttpBody, HttpClient, HttpClientRequest, HttpServerRequest, HttpServerResponse } from "effect/unstable/http"
 import { createHash } from "node:crypto"
@@ -9,8 +10,22 @@ let embeddedUIPromise: Promise<Record<string, string> | null> | undefined
 export const UI_UPSTREAM = new URL("https://app.opencode.ai")
 
 export const csp = (hash = "") =>
-  `default-src 'self'; script-src 'self' 'wasm-unsafe-eval'${hash ? ` 'sha256-${hash}'` : ""}; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; font-src 'self' data:; media-src 'self' data:; connect-src * data: blob:`
+  `default-src 'self'; script-src 'self' 'wasm-unsafe-eval'${hash ? ` 'sha256-${hash}'` : ""}; style-src 'self' 'unsafe-inline'; img-src 'self' data: ${Flag.OPENCODE_AIR_GAPPED ? "" : "https: "}blob:; font-src 'self' data:; media-src 'self' data:; connect-src ${Flag.OPENCODE_AIR_GAPPED ? ["'self'", ...airGapOrigins().flatMap((origin) => [origin, origin.replace(/^http/, "ws")])].join(" ") : "*"} data: blob:`
 export const DEFAULT_CSP = csp()
+
+function airGapOrigins() {
+  return (process.env.OPENCODE_AIR_GAP_ALLOW_ORIGINS ?? "")
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean)
+    .map((value) => {
+      const url = new URL(value)
+      if (!/^https?:\/\/(?:[a-z0-9._-]+|\[[a-f0-9:]+\])(?::\d+)?$/i.test(value) || url.origin !== value) {
+        throw new Error("OPENCODE_AIR_GAP_ALLOW_ORIGINS must contain canonical HTTP(S) origins without paths.")
+      }
+      return url.origin
+    })
+}
 
 export function themePreloadHash(body: string) {
   return body.match(/<script\b(?![^>]*\bsrc\s*=)[^>]*\bid=(['"])oc-theme-preload-script\1[^>]*>([\s\S]*?)<\/script>/i)
@@ -56,7 +71,17 @@ function embeddedUIResponse(file: string, body: Uint8Array) {
   const mime = FSUtil.mimeType(file)
   const headers = new Headers({ "content-type": mime })
   if (mime.startsWith("text/html")) {
-    headers.set("content-security-policy", cspForHtml(new TextDecoder().decode(body)))
+    const html = new TextDecoder().decode(body)
+    headers.set("content-security-policy", cspForHtml(html))
+    return HttpServerResponse.text(
+      Flag.OPENCODE_AIR_GAPPED
+        ? html.replace(
+            /<head\b[^>]*>/i,
+            `$&<meta name="opencode-air-gapped" content="on"><meta name="opencode-air-gap-allow-origins" content="${airGapOrigins().join(",")}">`,
+          )
+        : html,
+      { headers },
+    )
   }
   return HttpServerResponse.raw(body, { headers })
 }
@@ -84,6 +109,12 @@ export function serveUIEffect(
     const path = new URL(request.url, "http://localhost").pathname
 
     if (embeddedWebUI) return yield* serveEmbeddedUIEffect(path, services.fs, embeddedWebUI)
+    if (Flag.OPENCODE_AIR_GAPPED) {
+      return HttpServerResponse.jsonUnsafe(
+        { error: "Air-gapped mode requires a package built with the embedded web UI." },
+        { status: 503 },
+      )
+    }
 
     const response = yield* services.client.execute(
       HttpClientRequest.make(request.method)(upstreamURL(path), {
