@@ -1,15 +1,15 @@
 # 保留既有 OpenCode，獨立試用離線版
 
-適用於 Linux x64 的 `v1.18.29-airgap.2` standalone 發行包。試用版使用新的設定、資料庫、快取與工作目錄；不匯入既有對話或登入資料。新資料庫仍會初始化 schema，但不會對舊資料庫執行 migration。單獨設定 `OPENCODE_AIR_GAPPED=on` 不會隔離資料。
+適用於 Linux x64 的 `v1.18.29-airgap.4` standalone 發行包。試用版使用新的設定、資料庫、快取與工作目錄；不匯入既有對話或登入資料。新資料庫仍會初始化 schema，但不會對舊資料庫執行 migration。單獨設定 `OPENCODE_AIR_GAPPED=on` 不會隔離資料。
 
 ## 啟動
 
-從 [Release](https://github.com/tom19960222/opencode/releases/tag/v1.18.29-airgap.2) 下載 `.tar.gz` standalone 包及其 `.sha256`，放在同一目錄。另下載 Release 附件 `air-gap-trial.sh`。使用新的解壓目錄，不需要覆蓋現有 `opencode` 或全域 npm 安裝。
+從 [Release](https://github.com/tom19960222/opencode/releases/tag/v1.18.29-airgap.4) 下載 `.tar.gz` standalone 包及其 `.sha256`，放在同一目錄。另下載 Release 附件 `air-gap-trial.sh`。使用新的解壓目錄，不需要覆蓋現有 `opencode` 或全域 npm 安裝。
 
 ```bash
-sha256sum -c opencode-linux-x64-baseline-air-gapped-1.18.29-airgap.2.tar.gz.sha256
+sha256sum -c opencode-linux-x64-baseline-air-gapped-1.18.29-airgap.4.tar.gz.sha256
 mkdir opencode-offline-trial
-tar -xzf opencode-linux-x64-baseline-air-gapped-1.18.29-airgap.2.tar.gz \
+tar -xzf opencode-linux-x64-baseline-air-gapped-1.18.29-airgap.4.tar.gz \
   --strip-components=1 -C opencode-offline-trial
 bash /path/to/air-gap-trial.sh "$PWD/opencode-offline-trial/bin/opencode"
 ```

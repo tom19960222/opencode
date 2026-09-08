@@ -92,7 +92,7 @@ bun script/collect-licenses.ts
 curl --fail --location https://models.opencode.ai/api.json --output assets/models.json
 bun script/check-parsers.ts
 bun script/check-parser-worker.ts
-OPENCODE_VERSION=1.18.29-airgap.2 bun script/build.ts --single --baseline --skip-install --air-gapped
+OPENCODE_VERSION=1.18.29-airgap.4 bun script/build.ts --single --baseline --skip-install --air-gapped
 ```
 
 額外 npm 套件用 `OPENCODE_AIR_GAP_NPM_PACKAGES` 指定，以逗號分隔並固定版本。遠端設定、skill index、skill 檔案的完整 URL，每行一個，透過 `OPENCODE_AIR_GAP_RESOURCE_LIST` 傳入 `prepare-resources.ts`。資源檔名由完整 URL 的 SHA-256 決定，因此 query string 也是比對的一部分。

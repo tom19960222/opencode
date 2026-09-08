@@ -273,7 +273,9 @@ for (const item of targets) {
     await Bun.write(`dist/${name}/LICENSE`, Bun.file(path.join(dir, "../../LICENSE")))
     await Bun.write(`dist/${name}/DOTNET-LICENSES.txt`, Bun.file(path.join(dir, "script/licenses/dotnet-LICENSES.txt")))
     await Bun.write(`dist/${name}/README.md`, Bun.file(path.join(dir, "../../docs/air-gap.md")))
+    await Bun.write(`dist/${name}/air-gap-trial.sh`, Bun.file(path.join(dir, "script/air-gap-trial.sh")))
     for (const file of [
+      "air-gap-trial.md",
       "air-gap-network-inventory.md",
       "air-gap-native-prerequisites.md",
       "air-gap-network-sites.txt",
@@ -291,6 +293,8 @@ for (const item of targets) {
     await Bun.write(`${npm}/bin/opencode.cjs`, Bun.file(path.join(dir, "script/air-gap-launcher.cjs")))
     await $`chmod +x ${npm}/bin/opencode.cjs`
     for (const file of [
+      "air-gap-trial.sh",
+      "air-gap-trial.md",
       "README.md",
       "LICENSE",
       "DOTNET-LICENSES.txt",
@@ -306,7 +310,7 @@ for (const item of targets) {
         {
           ...(await Bun.file(`dist/${name}/package.json`).json()),
           bin: { opencode: "bin/opencode.cjs" },
-          files: ["bin", "assets.tar.gz", "*.md", "*.txt", "LICENSE", "SHA256SUMS"],
+          files: ["bin", "assets.tar.gz", "*.md", "*.txt", "air-gap-trial.sh", "LICENSE", "SHA256SUMS"],
           opencodeAssetsSha256: (await $`sha256sum assets.tar.gz`.cwd(npm).text()).split(" ")[0],
         },
         null,
